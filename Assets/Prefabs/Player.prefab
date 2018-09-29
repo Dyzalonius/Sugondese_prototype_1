@@ -160,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1746076062835466}
   crosshair: {fileID: 1934725420167040}
+  spotlight: {fileID: 0}
   throwInput: Fire
   moveHorizontalInput: MoveHorizontal
   moveVerticalInput: MoveVertical
@@ -167,7 +168,7 @@ MonoBehaviour:
   aimVerticalInput: AimVertical
   minX: -6
   maxX: 0
-  minY: -4.1
+  minY: -4
   maxY: 1.7
 --- !u!212 &212725153874170472
 SpriteRenderer:

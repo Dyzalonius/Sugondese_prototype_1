@@ -230,6 +230,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 58440234419234904, guid: b23c0aa561e98604a926b5d05673b42e,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b23c0aa561e98604a926b5d05673b42e, type: 2}
   m_IsPrefabAsset: 0
@@ -245,7 +250,7 @@ GameObject:
   - component: {fileID: 339570261}
   - component: {fileID: 339570260}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: SpotlightCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -305,7 +310,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1252075113
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &339570263
@@ -383,12 +388,7 @@ Prefab:
     - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
         type: 2}
       propertyPath: maxX
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
-        type: 2}
-      propertyPath: minY
-      value: -4.1
+      value: 8.2
       objectReference: {fileID: 0}
     - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
         type: 2}
@@ -1048,11 +1048,6 @@ Prefab:
       propertyPath: m_SortingLayer
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
-        type: 2}
-      propertyPath: minY
-      value: -4
-      objectReference: {fileID: 0}
     - target: {fileID: 4827826179805068, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}
       propertyPath: m_LocalScale.y
       value: 6
@@ -1074,6 +1069,11 @@ Prefab:
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1519969390}
+    - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
+        type: 2}
+      propertyPath: minX
+      value: -8.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}
   m_IsPrefabAsset: 0

@@ -25,14 +25,7 @@ public class MovementBall : MonoBehaviour {
             Move();
         }
         if (dying) {
-            //speed *= speedDropRate * Time.deltaTime; // FIX THIS, it now drops linearly which is ugly
-            speed -= speedDropRate * Time.deltaTime;
-            if (speed <= 0) {
-                speed = 0;
-                flying = false;
-                onGround = true;
-                dying = false;
-            }
+            Die();
         }
     }
 
@@ -44,11 +37,11 @@ public class MovementBall : MonoBehaviour {
         //invert speeds if outside boundaries
         if (newX < minX || newX > maxX) {
             direction.x = -direction.x;
-            dying = true;
+            Kill();
         }
         if (newY < minY || newY > maxY) {
             direction.y = -direction.y;
-            dying = true;
+            Kill();
         }
 
         // force ball to stay within boundaries
@@ -67,6 +60,32 @@ public class MovementBall : MonoBehaviour {
         direction = newDirection;
         flying = true;
         speed = maxSpeed;
+    }
+
+    public void Kill() {
+        dying = true;
+    }
+
+    void Die() {
+        speed *= speedDropRate * (Time.deltaTime * Time.timeScale); // FIX THIS, it now drops linearly which is ugly
+        Debug.Log(speedDropRate * (Time.deltaTime * Time.timeScale));
+        // make it so the speeddroprate * deltaTime always reduces it consistently
+        //speed -= speedDropRate * Time.deltaTime * Time.timeScale;
+        if (speed <= 0) {
+            speed = 0;
+            flying = false;
+            onGround = true;
+            dying = false;
+        }
+    }
+
+    public void Collide(Vector3 other) {
+        direction = transform.position - other;
+    }
+
+    public void Kill(Vector3 other) {
+        Collide(other);
+        Kill();
     }
 
     public void Reset() {

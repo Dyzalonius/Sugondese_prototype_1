@@ -75,8 +75,13 @@ public class PlayerManager : MonoBehaviour {
             // Get hit
             if (other.gameObject.GetComponent<MovementBall>().flying) {
                 spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
+                other.gameObject.GetComponent<MovementBall>().Kill(transform.position);
+                //Invoke("PlayerHit", 0.4f);
             }
         }
+    }
+
+    void PlayerHit() {
     }
 
     // Pickup ball
