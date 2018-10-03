@@ -7,7 +7,7 @@ public class MovementBall : MonoBehaviour {
     Rigidbody2D rb;
     Vector3 direction;
     public bool onGround, flying, dying;
-    [SerializeField] float minX, maxX, minY, maxY, maxSpeed, speedDropRate;
+    [SerializeField] float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnKill, speedCutOff;
     float speed;
     Vector3 originalPosition;
 
@@ -20,12 +20,12 @@ public class MovementBall : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        if (flying) {
+	void FixedUpdate () {
+        if (flying || dying) {
             Move();
         }
         if (dying) {
-            Die();
+            SpeedDrop();
         }
     }
 
@@ -51,8 +51,18 @@ public class MovementBall : MonoBehaviour {
         );
     }
 
+    void SpeedDrop() {
+        speed *= Mathf.Pow(speedDropRate, Time.timeScale); // introduce Time.deltaTime and Time.timeScale properly
+
+        if (speed <= speedCutOff) {
+            speed = 0;
+            dying = false;
+        }
+    }
+
     public void Pickup() {
         onGround = false;
+        dying = false;
         transform.localPosition = new Vector3(0, 0, 0);
     }
 
@@ -63,29 +73,19 @@ public class MovementBall : MonoBehaviour {
     }
 
     public void Kill() {
+        speed = speed / speedDivisionOnKill;
         dying = true;
-    }
-
-    void Die() {
-        speed *= speedDropRate * (Time.deltaTime * Time.timeScale); // FIX THIS, it now drops linearly which is ugly
-        Debug.Log(speedDropRate * (Time.deltaTime * Time.timeScale));
-        // make it so the speeddroprate * deltaTime always reduces it consistently
-        //speed -= speedDropRate * Time.deltaTime * Time.timeScale;
-        if (speed <= 0) {
-            speed = 0;
-            flying = false;
-            onGround = true;
-            dying = false;
-        }
-    }
-
-    public void Collide(Vector3 other) {
-        direction = transform.position - other;
+        onGround = true;
+        flying = false;
     }
 
     public void Kill(Vector3 other) {
         Collide(other);
         Kill();
+    }
+
+    public void Collide(Vector3 other) {
+        direction = transform.position - other;
     }
 
     public void Reset() {

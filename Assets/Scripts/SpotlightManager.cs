@@ -6,7 +6,7 @@ public class SpotlightManager : MonoBehaviour {
 
     GameObject target;
     CanvasGroup canvasGroup;
-    [SerializeField] float shrinkValue, shrinkThreshold, fadeInSpeed, fadeOutSpeed, slowmoValue;
+    [SerializeField] float shrinkTime, shrinkThreshold, fadeInSpeed, fadeOutSpeed, slowmoValue;
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,7 @@ public class SpotlightManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (target != null) {
             FollowTarget();
         }
@@ -36,7 +36,7 @@ public class SpotlightManager : MonoBehaviour {
 
         if (transform.localScale.x > shrinkThreshold) {
             // Shrink
-            transform.localScale *= shrinkValue;
+            transform.localScale *= Mathf.Pow(shrinkThreshold, 1/(shrinkTime/Time.fixedUnscaledDeltaTime));
 
             // Fade in
             if (canvasGroup.alpha != 1) {
