@@ -1,35 +1,14 @@
-CONTROLS
-Keyboard is heeeeel onduidelijk
-Beetje onduidelijk dat je kon richten etc
-
-
-
-BUGS
-Ballen kunnen buiten het veld raken
-
-
-
-TWEAKS
-Dodgen zag er te makkelijk uit
-Dodgen was te makkelijk
-
-
-
 SHOULD
 bouncen moet definitely een ding zijn
 Bouncen moet een ding zijn
 Dash (niet invulnerable)
 Het moet duidelijk zijn precies wanneer je een bal weer mag oppakken
-De rocketleague start is een goed idee
 Lives, Round, Match
 Naast de 'neutrale' ballen in het midden, ook een lijn met jouw ballen, en de ander zn ballen, om ballen te kunnen geven aan specifieke spelers
-Bepaalde achievements om spelers te belonen met speciale ballen
-Het idee van rocketleague start is cool!
 Manieren om spelers te belonen
-NIET de game stoppen na elke hit, misschien juist elke 3 hits, of 5 hits (hoe meer levenspunten je overhoud, hoe meer speciale ballen je krijgt daarna? Nee), zodat je het tempo houdt
+Bepaalde achievements om spelers te belonen met speciale ballen
+Hoe meer levenspunten je overhoud, hoe meer speciale ballen je krijgt daarna
 Let op mario football, dodgeball, baseketball, om wacky elementen toe te voegen (waterbal, om spelers om te laten vallen in een area, of gewoon in 1 keer om te vallen. Lijmbal om spelers te vertragen in een area. Bounceball om tegen de muur te kunnen gaan. Stinkbal, maakt een wolk? Curvebal? Splitball. Speedball. Big ball. Cluster ball)
-
-
 
 
 COULD
@@ -37,20 +16,28 @@ Het veld is mogelijk te groot en de bal gaat te traag
 Een soort van 'flux', die je kan activaten om slomo te doen, het slomo was namelijk wel cool voor het dodgen
 Ballen chargen zou wel cool zijn (en dan trager bewegen tijdens het chargen)
 Misschien 'flikkeren' om invulnerable te zijn na een hit
-Misschien de snelheid van de speler toevoegen aan de ball!!
+Misschien de snelheid van de speler toevoegen aan de ball
 Misschien invoeren dat je maar een aantal seconden buiten het veld mag blijven / de ball vasthouden om de pace te increasen?
 Maybe killstreaks, en daarmee spelers belonen
 Ballen andere ballen laten deflecten
 
 
-
-WONT
-Alles moet resetten op een hit
-
-
-
-IMPLEMENTED
+IMPLEMENTED/FIXED
 De ball moet van de player afbouncen wanneer er slomo is
 Onduidelijk dat de slomo was nadat je gehit was, dus de ball moet van de player af bouncen. cool.
 De camera orientation is onduidelijk (dat het EtG style is)
 Middenlijn is onduidelijk
+Ballen kunnen buiten het veld raken
+De rocketleague start is een goed idee
+Het idee van rocketleague start is cool!
+NIET de game stoppen na elke hit, misschien juist elke 3 hits, of 5 hits, zodat je het tempo houdt
+
+
+CONTROLS
+Keyboard is heeeeel onduidelijk
+Beetje onduidelijk dat je kon richten etc
+
+
+TWEAKS
+Dodgen zag er te makkelijk uit
+Dodgen was te makkelijk

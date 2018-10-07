@@ -8,7 +8,7 @@ public class ScoreboardManager : MonoBehaviour {
 
     int score1, score2, lives1, lives2;
     [SerializeField] GameObject player1, player2;
-    [SerializeField] int scoreToWin, livesMax;
+    [SerializeField] int scoreToWin, livesMax, countdownTimerMax;
     [SerializeField] float resetDelay;
     [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, countdownText;
     List<GameObject> balls;
@@ -25,8 +25,8 @@ public class ScoreboardManager : MonoBehaviour {
         UpdateText();
         balls = new List<GameObject>();
         nextBallSpawn = 0;
-        SpawnBalls();
-        countdownTimer = 4;
+        countdownTimer = countdownTimerMax+1;
+        ResetRound();
     }
 	
 	// Update is called once per frame
@@ -77,6 +77,7 @@ public class ScoreboardManager : MonoBehaviour {
     void ResetRound() {
         player1.GetComponent<PlayerManager>().ResetRound();
         player2.GetComponent<PlayerManager>().ResetRound();
+        UpdateText();
         DeleteBalls();
         SpawnBalls();
         Countdown();
@@ -107,6 +108,7 @@ public class ScoreboardManager : MonoBehaviour {
         switch (countdownTimer) {
             case -1:
                 countdownText.text = "";
+                countdownTimer = countdownTimerMax + 1;
                 break;
             case 0:
                 countdownText.text = "GO!";
