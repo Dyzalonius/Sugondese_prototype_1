@@ -6,10 +6,11 @@ public class SpotlightManager : MonoBehaviour {
 
     GameObject target;
     CanvasGroup canvasGroup;
-    [SerializeField] float shrinkTime, shrinkThreshold, fadeInSpeed, fadeOutSpeed, slowmoValue;
+    [SerializeField] float shrinkThreshold, fadeInSpeed, fadeOutSpeed, slowmoValue;
+    public float shrinkTime;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         canvasGroup = GetComponent<CanvasGroup>();
     }
 	

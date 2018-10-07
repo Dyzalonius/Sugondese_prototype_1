@@ -7,21 +7,27 @@ public class PlayerManager : MonoBehaviour {
     
     [SerializeField] GameObject player;
     [SerializeField] GameObject crosshair;
-    [SerializeField] CanvasGroup spotlight;
+    [SerializeField] CanvasGroup spotlight, scoreboard;
     [SerializeField] string throwInput, moveHorizontalInput, moveVerticalInput, aimHorizontalInput, aimVerticalInput;
     [SerializeField] float minX, maxX, minY, maxY;
+    [SerializeField] int teamID;
 
     Rigidbody2D rb;
     Vector3 aimDirection;
     List<GameObject> balls;
     bool throwing;
     Vector3[] ballPositions = new Vector3[] { new Vector3(0,0,0), new Vector3(-0.1f,-0.1f,0), new Vector3(0.1f,-0.1f,0) };
+    Vector3 spawnPosition;
+    public bool roundLive, countdownLive;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         aimDirection = new Vector3(0, 1, 0);
         balls = new List<GameObject>();
+        spawnPosition = transform.position;
+        roundLive = true;
+        countdownLive = false;
     }
 	
 	// Update is called once per frame
@@ -30,7 +36,7 @@ public class PlayerManager : MonoBehaviour {
         UpdateCrosshair();
 
         if (Input.GetAxis(throwInput) > 0) {
-            if (!throwing) {
+            if (!throwing && roundLive) {
                 Throw();
             }
             throwing = true;
@@ -45,6 +51,10 @@ public class PlayerManager : MonoBehaviour {
 
         var x = Input.GetAxis(moveHorizontalInput) * Time.deltaTime * Time.timeScale * 5.0f;
         var y = Input.GetAxis(moveVerticalInput) * Time.deltaTime * Time.timeScale * 5.0f;
+
+        if (countdownLive) {
+            x = 0;
+        }
 
         // force player to stay within boundaries
         player.transform.position = new Vector2(
@@ -74,14 +84,18 @@ public class PlayerManager : MonoBehaviour {
 
             // Get hit
             if (other.gameObject.GetComponent<MovementBall>().flying) {
-                spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
                 other.gameObject.GetComponent<MovementBall>().Kill(transform.position);
-                //Invoke("PlayerHit", 0.4f);
+
+                if (roundLive) {
+                    spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
+                    PlayerHit();
+                }
             }
         }
     }
 
     void PlayerHit() {
+        scoreboard.GetComponent<ScoreboardManager>().RemoveLife(teamID);
     }
 
     // Pickup ball
@@ -108,5 +122,12 @@ public class PlayerManager : MonoBehaviour {
             ball.GetComponent<MovementBall>().Fire(aimDirection);
             SortBalls();
         }
+    }
+
+    public void ResetRound() {
+        roundLive = true;
+        countdownLive = true;
+        balls.Clear();
+        player.transform.position = spawnPosition;
     }
 }

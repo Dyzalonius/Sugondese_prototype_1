@@ -170,6 +170,7 @@ MonoBehaviour:
   maxX: 0
   minY: -4
   maxY: 1.7
+  teamID: 0
 --- !u!212 &212725153874170472
 SpriteRenderer:
   m_ObjectHideFlags: 1
