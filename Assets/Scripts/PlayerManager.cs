@@ -78,13 +78,13 @@ public class PlayerManager : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "ballNew") {
             // Pickup ball
-            if (other.gameObject.GetComponent<MovementBall>().onGround && balls.Count < 3) {
+            if (other.gameObject.GetComponent<Ball>().onGround && balls.Count < 3) {
                 Pickup(other.gameObject);
             }
 
             // Get hit
-            if (other.gameObject.GetComponent<MovementBall>().flying) {
-                other.gameObject.GetComponent<MovementBall>().Kill(transform.position);
+            if (other.gameObject.GetComponent<Ball>().flying) {
+                other.gameObject.GetComponent<Ball>().OnBounce(transform.position);
 
                 if (roundLive) {
                     spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
@@ -102,7 +102,7 @@ public class PlayerManager : MonoBehaviour {
     void Pickup(GameObject ball) {
         ball.transform.parent = player.transform;
         balls.Add(ball);
-        ball.GetComponent<MovementBall>().Pickup();
+        ball.GetComponent<Ball>().Pickup();
         SortBalls();
     }
 
@@ -119,7 +119,7 @@ public class PlayerManager : MonoBehaviour {
             var ball = balls[0];
             balls.RemoveAt(0);
             ball.transform.parent = null;
-            ball.GetComponent<MovementBall>().Fire(aimDirection);
+            ball.GetComponent<Ball>().Fire(aimDirection);
             SortBalls();
         }
     }

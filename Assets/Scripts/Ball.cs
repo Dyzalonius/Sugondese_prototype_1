@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementBall : MonoBehaviour {
+public class Ball : MonoBehaviour {
 
     Rigidbody2D rb;
     Vector3 direction;
     public bool onGround, flying, dying;
-    [SerializeField] float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnKill, speedCutOff;
+    [SerializeField] float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnBounce, speedCutOff;
     float speed;
     Vector3 originalPosition;
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
         rb = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
-        Reset();
         speed = 0;
+        Reset();
     }
 	
 	// Update is called once per frame
@@ -37,11 +37,11 @@ public class MovementBall : MonoBehaviour {
         //invert speeds if outside boundaries
         if (newX < minX || newX > maxX) {
             direction.x = -direction.x;
-            Kill();
+            OnBounce();
         }
         if (newY < minY || newY > maxY) {
             direction.y = -direction.y;
-            Kill();
+            OnBounce();
         }
 
         // force ball to stay within boundaries
@@ -72,16 +72,20 @@ public class MovementBall : MonoBehaviour {
         speed = maxSpeed;
     }
 
-    public void Kill() {
-        speed = speed / speedDivisionOnKill;
+    public virtual void OnBounce() {
+        Kill();
+    }
+
+    public virtual void Kill() {
+        speed = speed / speedDivisionOnBounce;
         dying = true;
         onGround = true;
         flying = false;
     }
 
-    public void Kill(Vector3 other) {
+    public void OnBounce(Vector3 other) {
         Collide(other);
-        Kill();
+        OnBounce();
     }
 
     public void Collide(Vector3 other) {

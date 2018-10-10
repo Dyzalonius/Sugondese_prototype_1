@@ -7,8 +7,8 @@ Lives, Round, Match
 Naast de 'neutrale' ballen in het midden, ook een lijn met jouw ballen, en de ander zn ballen, om ballen te kunnen geven aan specifieke spelers
 Manieren om spelers te belonen
 Bepaalde achievements om spelers te belonen met speciale ballen
-Hoe meer levenspunten je overhoud, hoe meer speciale ballen je krijgt daarna
 Let op mario football, dodgeball, baseketball, om wacky elementen toe te voegen (waterbal, om spelers om te laten vallen in een area, of gewoon in 1 keer om te vallen. Lijmbal om spelers te vertragen in een area. Bounceball om tegen de muur te kunnen gaan. Stinkbal, maakt een wolk? Curvebal? Splitball. Speedball. Big ball. Cluster ball)
+Hoe minder levens de winnaar overhoudt, hoe meer ballen de tegenstandig krijgt volgende ronde.
 
 
 COULD

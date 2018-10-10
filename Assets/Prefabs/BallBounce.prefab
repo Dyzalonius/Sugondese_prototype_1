@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212711464022983626}
   - component: {fileID: 50097757081731828}
   - component: {fileID: 58440234419234904}
-  - component: {fileID: 114271830189824758}
+  - component: {fileID: 114002310143066294}
   m_Layer: 9
-  m_Name: Ball
+  m_Name: BallBounce
   m_TagString: ballNew
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1390377918576082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.2799999
---- !u!114 &114271830189824758
+--- !u!114 &114002310143066294
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,10 +86,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1390377918576082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3979eb21415364409ef1d8de3e22c94, type: 3}
+  m_Script: {fileID: 11500000, guid: 76145b1646021394182204a598760e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onGround: 0
+  onGround: 1
   flying: 0
   dying: 0
   minX: -8.8
@@ -100,6 +100,7 @@ MonoBehaviour:
   speedDropRate: 0.9
   speedDivisionOnBounce: 3
   speedCutOff: 0.2
+  maxBounceCount: 2
 --- !u!212 &212711464022983626
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -135,7 +136,7 @@ SpriteRenderer:
   m_SortingLayerID: 829323345
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bae5bd47dec58f74f9cecfe871e4cd10, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7dd79121a7c396a498ec0134bd242c3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

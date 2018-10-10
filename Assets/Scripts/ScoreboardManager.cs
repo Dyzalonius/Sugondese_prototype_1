@@ -12,8 +12,8 @@ public class ScoreboardManager : MonoBehaviour {
     [SerializeField] float resetDelay;
     [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, countdownText;
     List<GameObject> balls;
-    Vector3[] ballSpawns = new Vector3[] { new Vector3(0, -1.5f, 0), new Vector3(0, 0, 0), new Vector3(0, -3f, 0) };
-    public GameObject ball;
+    float[][] ballSpawns = new float[][] { new float[] {0, -1.5f, 1.5f}, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
+    public GameObject ball, ballBounce;
     int nextBallSpawn, countdownTimer;
 
     // Use this for initialization
@@ -93,13 +93,22 @@ public class ScoreboardManager : MonoBehaviour {
 
     void SpawnBalls() {
         nextBallSpawn = 0;
-        CreateBall();
-        CreateBall();
-        CreateBall();
+        CreateBall(1);
+        CreateBall(0);
+        CreateBall(0);
+        CreateBall(0);
+        CreateBall(0);
     }
 
-    void CreateBall() {
-        balls.Add(Instantiate(ball, ballSpawns[nextBallSpawn], Quaternion.Euler(0,0,0)));
+    void CreateBall(int ballType) {
+        switch (ballType) {
+            case 0:
+                balls.Add(Instantiate(ball, new Vector3(ballSpawns[0][0], ballSpawns[1][nextBallSpawn],0), Quaternion.Euler(0, 0, 0)));
+                break;
+            case 1:
+                balls.Add(Instantiate(ballBounce, new Vector3(ballSpawns[0][0], ballSpawns[1][nextBallSpawn], 0), Quaternion.Euler(0, 0, 0)));
+                break;
+        }
         nextBallSpawn++;
     }
 
