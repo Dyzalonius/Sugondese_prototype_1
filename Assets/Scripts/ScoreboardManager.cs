@@ -12,8 +12,10 @@ public class ScoreboardManager : MonoBehaviour {
     [SerializeField] float resetDelay;
     [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, countdownText;
     List<GameObject> balls;
-    float[][] ballSpawns = new float[][] { new float[] {0, -1.5f, 1.5f}, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
-    public GameObject ball, ballBounce;
+    float[][] ballSpawns = new float[][] { new float[] {0, -1.245f, 1.245f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
+    public GameObject ball, ballBounce, ballCurve;
+    GameObject[] ballTypes;
+    List<int>[] ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
     int nextBallSpawn, countdownTimer;
 
     // Use this for initialization
@@ -24,8 +26,10 @@ public class ScoreboardManager : MonoBehaviour {
         lives2 = livesMax;
         UpdateText();
         balls = new List<GameObject>();
+        ballTypes = new GameObject[] { ball, ballBounce, ballCurve };
         nextBallSpawn = 0;
         countdownTimer = countdownTimerMax+1;
+        GenerateBallsToSpawn(0, 2);
         ResetRound();
     }
 	
@@ -41,6 +45,7 @@ public class ScoreboardManager : MonoBehaviour {
                 UpdateText();
 
                 if (lives1 == 0) {
+                    GenerateBallsToSpawn(1, lives2);
                     score2++;
                     UpdateText();
                     EndRound();
@@ -51,6 +56,7 @@ public class ScoreboardManager : MonoBehaviour {
                 UpdateText();
 
                 if (lives2 == 0) {
+                    GenerateBallsToSpawn(2, lives1);
                     score1++;
                     UpdateText();
                     EndRound();
@@ -79,6 +85,7 @@ public class ScoreboardManager : MonoBehaviour {
         player2.GetComponent<PlayerManager>().ResetRound();
         UpdateText();
         DeleteBalls();
+        nextBallSpawn = 0;
         SpawnBalls();
         Countdown();
     }
@@ -91,25 +98,45 @@ public class ScoreboardManager : MonoBehaviour {
         }
     }
 
-    void SpawnBalls() {
-        nextBallSpawn = 0;
-        CreateBall(1);
-        CreateBall(0);
-        CreateBall(0);
-        CreateBall(0);
-        CreateBall(0);
+    void GenerateBallsToSpawn(int loserID, int winnerLivesLeft) {
+        ballsToSpawn[0].Add(1);
+        ballsToSpawn[0].Add(0);
+        ballsToSpawn[0].Add(0);
+        
+        for (int i = 0; i < winnerLivesLeft; i++) {
+            ballsToSpawn[loserID].Add(2);
+        }
     }
 
-    void CreateBall(int ballType) {
-        switch (ballType) {
-            case 0:
-                balls.Add(Instantiate(ball, new Vector3(ballSpawns[0][0], ballSpawns[1][nextBallSpawn],0), Quaternion.Euler(0, 0, 0)));
-                break;
-            case 1:
-                balls.Add(Instantiate(ballBounce, new Vector3(ballSpawns[0][0], ballSpawns[1][nextBallSpawn], 0), Quaternion.Euler(0, 0, 0)));
-                break;
+    void SpawnBalls() {
+        // middle balls
+        nextBallSpawn = 0;
+        for (int i = 0; i < ballsToSpawn[0].Count; i++) {
+            CreateBall(ballsToSpawn[0].ElementAt(i), 0);
+            nextBallSpawn++;
         }
-        nextBallSpawn++;
+        ballsToSpawn[0].Clear();
+
+        // player 1 balls
+        nextBallSpawn = ballSpawns[1].Length - 1;
+        for (int i = 0; i < ballsToSpawn[1].Count; i++) {
+            CreateBall(ballsToSpawn[1].ElementAt(i), 1);
+            nextBallSpawn--;
+        }
+        ballsToSpawn[1].Clear();
+
+        // player 2 balls
+        nextBallSpawn = ballSpawns[1].Length - 1;
+        for (int i = 0; i < ballsToSpawn[2].Count; i++) {
+            CreateBall(ballsToSpawn[2].ElementAt(i), 2);
+            nextBallSpawn--;
+        }
+        ballsToSpawn[2].Clear();
+    }
+
+    void CreateBall(int ballTypeIndex, int xPosition) {
+        GameObject ballType = ballTypes[ballTypeIndex];
+        balls.Add(Instantiate(ballType, new Vector3(ballSpawns[0][xPosition], ballSpawns[1][nextBallSpawn],0), Quaternion.Euler(0, 0, 0)));
     }
 
     void Countdown() {

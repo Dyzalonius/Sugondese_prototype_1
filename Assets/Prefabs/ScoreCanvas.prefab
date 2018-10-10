@@ -363,6 +363,7 @@ MonoBehaviour:
   countdownText: {fileID: 114599986274726444}
   ball: {fileID: 1390377918576082, guid: b23c0aa561e98604a926b5d05673b42e, type: 2}
   ballBounce: {fileID: 1390377918576082, guid: 9a0a87283fbfaea46823c9c3b81f36a9, type: 2}
+  ballCurve: {fileID: 1390377918576082, guid: 8f0f2730474db8c42a7462d2a37cd30f, type: 2}
 --- !u!114 &114350779662773182
 MonoBehaviour:
   m_ObjectHideFlags: 1

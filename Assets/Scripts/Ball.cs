@@ -5,14 +5,14 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
 
     Rigidbody2D rb;
-    Vector3 direction;
+    protected Vector3 direction;
     public bool onGround, flying, dying;
     [SerializeField] float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnBounce, speedCutOff;
     float speed;
     Vector3 originalPosition;
 
 	// Use this for initialization
-	public virtual void Start () {
+	protected virtual void Start () {
         rb = GetComponent<Rigidbody2D>();
         originalPosition = transform.position;
         speed = 0;
@@ -29,7 +29,7 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    void Move() {
+    protected virtual void Move() {
         var currentPos = rb.position;
         var newX = currentPos.x + direction.x * speed * Time.deltaTime * Time.timeScale;
         var newY = currentPos.y + direction.y * speed * Time.deltaTime * Time.timeScale;
@@ -66,21 +66,18 @@ public class Ball : MonoBehaviour {
         transform.localPosition = new Vector3(0, 0, 0);
     }
 
-    public void Fire(Vector3 newDirection) {
+    protected void ChangeDirection(Vector3 newDirection) {
         direction = newDirection;
+    }
+
+    public void Fire(Vector3 newDirection) {
+        ChangeDirection(newDirection);
         flying = true;
         speed = maxSpeed;
     }
 
-    public virtual void OnBounce() {
+    protected virtual void OnBounce() {
         Kill();
-    }
-
-    public virtual void Kill() {
-        speed = speed / speedDivisionOnBounce;
-        dying = true;
-        onGround = true;
-        flying = false;
     }
 
     public void OnBounce(Vector3 other) {
@@ -88,11 +85,18 @@ public class Ball : MonoBehaviour {
         OnBounce();
     }
 
-    public void Collide(Vector3 other) {
+    protected virtual void Kill() {
+        speed = speed / speedDivisionOnBounce;
+        dying = true;
+        onGround = true;
+        flying = false;
+    }
+
+    protected void Collide(Vector3 other) {
         direction = transform.position - other;
     }
 
-    public void Reset() {
+    protected void Reset() {
         direction = Vector3.zero;
         onGround = true;
         flying = false;

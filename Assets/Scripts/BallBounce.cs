@@ -7,19 +7,19 @@ public class BallBounce : Ball {
     int bounceCount;
     public int maxBounceCount;
 
-    public override void Start() {
+    protected override void Start() {
         bounceCount = 0;
         base.Start();
     }
 
-    public override void OnBounce() {
+    protected override void OnBounce() {
         bounceCount++;
         if (bounceCount == maxBounceCount) {
             Kill();
         }
     }
 
-    public override void Kill() {
+    protected override void Kill() {
         bounceCount = 0;
         base.Kill();
     }
