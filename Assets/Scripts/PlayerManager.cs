@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField] GameObject crosshair;
     [SerializeField] CanvasGroup spotlight, scoreboard;
     [SerializeField] string throwInput, moveHorizontalInput, moveVerticalInput, aimHorizontalInput, aimVerticalInput;
-    [SerializeField] float minX, maxX, minY, maxY;
+    public float minX, maxX, minY, maxY;
     [SerializeField] int teamID;
 
     Rigidbody2D rb;

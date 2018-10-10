@@ -10,13 +10,14 @@ public class ScoreboardManager : MonoBehaviour {
     [SerializeField] GameObject player1, player2;
     [SerializeField] int scoreToWin, livesMax, countdownTimerMax;
     [SerializeField] float resetDelay;
-    [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, countdownText;
+    [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
     List<GameObject> balls;
     float[][] ballSpawns = new float[][] { new float[] {0, -1.245f, 1.245f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
     public GameObject ball, ballBounce, ballCurve;
     GameObject[] ballTypes;
     List<int>[] ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
     int nextBallSpawn, countdownTimer;
+    float courtTimer1, courtTimer2;
 
     // Use this for initialization
     void Start () {
@@ -24,6 +25,8 @@ public class ScoreboardManager : MonoBehaviour {
         score2 = 0;
         lives1 = livesMax;
         lives2 = livesMax;
+        courtTimer1 = 0;
+        courtTimer2 = 0;
         UpdateText();
         balls = new List<GameObject>();
         ballTypes = new GameObject[] { ball, ballBounce, ballCurve };
@@ -35,8 +38,36 @@ public class ScoreboardManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        HandleCourtTimers();
 	}
+
+    void HandleCourtTimers() {
+        int ballsInCourt1 = 0;
+        int ballsInCourt2 = 0;
+
+
+        for (int i = 0; i < balls.Count; i++) {
+            float x = balls.ElementAt(i).transform.position.x;
+
+            if (x <= 0) {
+                ballsInCourt1++;
+            }
+
+            if (x >= 0) {
+                ballsInCourt2++;
+            }
+        }
+
+        if (ballsInCourt1 == 0) {
+            courtTimer1 += Time.deltaTime;
+            UpdateText();
+        }
+
+        if (ballsInCourt2 == 0) {
+            courtTimer2 += Time.deltaTime;
+            UpdateText();
+        }
+    }
 
     public void RemoveLife(int teamID) {
         switch (teamID) {
@@ -70,6 +101,8 @@ public class ScoreboardManager : MonoBehaviour {
         score2Text.text = "" + score2;
         lives1Text.text = "Lives: " + lives1;
         lives2Text.text = "Lives: " + lives2;
+        time1Text.text = "" + (int) courtTimer1 + "s";
+        time2Text.text = "" + (int) courtTimer2 + "s";
     }
 
     void EndRound() {

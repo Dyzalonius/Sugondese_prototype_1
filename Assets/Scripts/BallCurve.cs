@@ -22,7 +22,6 @@ public class BallCurve : Ball {
         Vector3 newDirection = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
         newDirection.Normalize();
         
-        Debug.Log(angle + ": " + direction.x + ", " + direction.y + " = " + newDirection.x + ", " + newDirection.y);
         ChangeDirection(newDirection);
 
         base.Move();
