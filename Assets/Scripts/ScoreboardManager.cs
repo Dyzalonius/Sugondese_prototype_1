@@ -9,8 +9,9 @@ public class ScoreboardManager : MonoBehaviour {
     int score1, score2, lives1, lives2;
     [SerializeField] GameObject player1, player2;
     [SerializeField] int scoreToWin, livesMax, countdownTimerMax;
-    [SerializeField] float resetDelay;
+    [SerializeField] float resetDelay, maxCourtTimer;
     [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
+    [SerializeField] CanvasGroup spotlight;
     List<GameObject> balls;
     float[][] ballSpawns = new float[][] { new float[] {0, -1.245f, 1.245f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
     public GameObject ball, ballBounce, ballCurve;
@@ -45,27 +46,76 @@ public class ScoreboardManager : MonoBehaviour {
         int ballsInCourt1 = 0;
         int ballsInCourt2 = 0;
 
-
+        // check for every ball on which side of the court they are
         for (int i = 0; i < balls.Count; i++) {
             float x = balls.ElementAt(i).transform.position.x;
 
             if (x <= 0) {
                 ballsInCourt1++;
             }
-
             if (x >= 0) {
                 ballsInCourt2++;
             }
         }
 
-        if (ballsInCourt1 == 0) {
+        // count up courttimer1 if there is no balls in court 1
+        if (ballsInCourt1 == 0 && courtTimer1 < maxCourtTimer) {
             courtTimer1 += Time.deltaTime;
+
+            // if timer is over max, set to max
+            if (courtTimer1 > maxCourtTimer) {
+                courtTimer1 = maxCourtTimer;
+            }
+
+            // if timer is under half a second, blink
+            if (courtTimer1 % 1 > 0.5) {
+                time1Text.color = Color.clear;
+            }
+            else {
+                time1Text.color = Color.white;
+            }
             UpdateText();
+        } else {
+            if (courtTimer1 < maxCourtTimer) {
+                time1Text.color = Color.gray;
+            }
         }
 
-        if (ballsInCourt2 == 0) {
+        // count up courttimer2 if there is no balls in court 2
+        if (ballsInCourt2 == 0 && courtTimer2 < maxCourtTimer) {
             courtTimer2 += Time.deltaTime;
+
+            // if timer is over max, set to max
+            if (courtTimer2 > maxCourtTimer) {
+                courtTimer2 = maxCourtTimer;
+            }
+
+            // if timer is over half a second, blink
+            if (courtTimer2 % 1 > 0.5) {
+                time2Text.color = Color.white;
+            }
+            else {
+                time2Text.color = Color.clear;
+            }
             UpdateText();
+        } else {
+            if (courtTimer2 < maxCourtTimer) {
+                time2Text.color = Color.gray;
+            }
+        }
+
+        // add score if either courtTimer is over max
+        if (courtTimer1 == maxCourtTimer) {
+            // increment, so it's not exactly max anymore (so it doesn't count twice)
+            courtTimer1 += 0.1f;
+            spotlight.GetComponent<SpotlightManager>().SetTarget(time1Text.transform.position);
+            AddScore(1);
+        }
+        if (courtTimer2 == maxCourtTimer) {
+            // increment, so it's not exactly max anymore (so it doesn't count twice)
+            courtTimer2 += 0.1f;
+            spotlight.GetComponent<SpotlightManager>().SetTarget(time2Text.transform.position);
+            AddScore(2);
         }
     }
 
@@ -76,10 +126,7 @@ public class ScoreboardManager : MonoBehaviour {
                 UpdateText();
 
                 if (lives1 == 0) {
-                    GenerateBallsToSpawn(1, lives2);
-                    score2++;
-                    UpdateText();
-                    EndRound();
+                    AddScore(2);
                 }
                 break;
             case 2:
@@ -87,11 +134,25 @@ public class ScoreboardManager : MonoBehaviour {
                 UpdateText();
 
                 if (lives2 == 0) {
-                    GenerateBallsToSpawn(2, lives1);
-                    score1++;
-                    UpdateText();
-                    EndRound();
+                    AddScore(1);
                 }
+                break;
+        }
+    }
+
+    void AddScore(int teamID) {
+        switch (teamID) {
+            case 1:
+                GenerateBallsToSpawn(2, lives1);
+                score1++;
+                UpdateText();
+                EndRound();
+                break;
+            case 2:
+                GenerateBallsToSpawn(1, lives2);
+                score2++;
+                UpdateText();
+                EndRound();
                 break;
         }
     }
@@ -101,13 +162,22 @@ public class ScoreboardManager : MonoBehaviour {
         score2Text.text = "" + score2;
         lives1Text.text = "Lives: " + lives1;
         lives2Text.text = "Lives: " + lives2;
-        time1Text.text = "" + (int) courtTimer1 + "s";
-        time2Text.text = "" + (int) courtTimer2 + "s";
+
+        if (courtTimer1 < 10) {
+            time1Text.text = "0:0" + (int)courtTimer1;
+        } else {
+            time1Text.text = "0:" + (int)courtTimer1;
+        }
+
+        if (courtTimer2 < 10) {
+            time2Text.text = "0:0" + (int)courtTimer2;
+        }
+        else {
+            time2Text.text = "0:" + (int)courtTimer2;
+        }
     }
 
     void EndRound() {
-        lives1 = livesMax;
-        lives2 = livesMax;
         player1.GetComponent<PlayerManager>().roundLive = false;
         player2.GetComponent<PlayerManager>().roundLive = false;
         Invoke("ResetRound", resetDelay);
@@ -116,9 +186,15 @@ public class ScoreboardManager : MonoBehaviour {
     void ResetRound() {
         player1.GetComponent<PlayerManager>().ResetRound();
         player2.GetComponent<PlayerManager>().ResetRound();
-        UpdateText();
-        DeleteBalls();
+
+        lives1 = livesMax;
+        lives2 = livesMax;
+        courtTimer1 = 0;
+        courtTimer2 = 0;
         nextBallSpawn = 0;
+        UpdateText();
+
+        DeleteBalls();
         SpawnBalls();
         Countdown();
     }

@@ -32,6 +32,7 @@ Hoe minder levens de winnaar overhoudt, hoe meer ballen de tegenstandig krijgt v
 Het moet duidelijk zijn precies wanneer je een bal weer mag oppakken
 bouncen moet definitely een ding zijn
 Bouncen moet een ding zijn
+If you have no balls in your court, a timer goes up. If it reaches 10 seconds, you win.
 
 
 CONTROLS

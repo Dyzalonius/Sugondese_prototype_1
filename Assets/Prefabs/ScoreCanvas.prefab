@@ -484,6 +484,7 @@ MonoBehaviour:
   livesMax: 1
   countdownTimerMax: 3
   resetDelay: 1.5
+  maxCourtTimer: 5
   lives1Text: {fileID: 114390816352270376}
   lives2Text: {fileID: 114151698718592656}
   score1Text: {fileID: 114903010737607876}
@@ -491,6 +492,7 @@ MonoBehaviour:
   time1Text: {fileID: 114191718214490212}
   time2Text: {fileID: 114683718230303702}
   countdownText: {fileID: 114599986274726444}
+  spotlight: {fileID: 0}
   ball: {fileID: 1390377918576082, guid: b23c0aa561e98604a926b5d05673b42e, type: 2}
   ballBounce: {fileID: 1390377918576082, guid: 9a0a87283fbfaea46823c9c3b81f36a9, type: 2}
   ballCurve: {fileID: 1390377918576082, guid: 8f0f2730474db8c42a7462d2a37cd30f, type: 2}

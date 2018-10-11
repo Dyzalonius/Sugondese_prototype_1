@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpotlightManager : MonoBehaviour {
 
     GameObject target;
+    public GameObject dummyTarget;
     CanvasGroup canvasGroup;
-    [SerializeField] float shrinkThreshold, fadeInSpeed, fadeOutSpeed, slowmoValue;
-    public float shrinkTime;
+    public float shrinkThreshold, fadeInSpeed, fadeOutSpeed, slowmoValue, shrinkTime;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +23,11 @@ public class SpotlightManager : MonoBehaviour {
 
     public void SetTarget(GameObject newTarget) {
         target = newTarget;
+    }
+
+    public void SetTarget(Vector3 newLocation) {
+        dummyTarget.transform.position = newLocation;
+        target = dummyTarget;
     }
 
     void RemoveTarget() {

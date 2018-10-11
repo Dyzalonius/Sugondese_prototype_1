@@ -100,7 +100,7 @@ MonoBehaviour:
   speedDropRate: 0.9
   speedDivisionOnBounce: 3
   speedCutOff: 0.2
-  curveAmount: 0.04
+  curveAmount: 0.03
 --- !u!212 &212711464022983626
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,7 +134,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 829323345
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 29fa273ab808d4f4fa225878d240eaf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
