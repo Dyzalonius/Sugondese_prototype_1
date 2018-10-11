@@ -58,7 +58,6 @@ public class SpotlightManager : MonoBehaviour {
             // Remove
             if (canvasGroup.alpha == 0) {
                 RemoveTarget();
-                // now you can reset the game
             }
         }
     }
