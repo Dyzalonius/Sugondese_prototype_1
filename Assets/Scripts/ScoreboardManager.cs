@@ -26,8 +26,8 @@ public class ScoreboardManager : MonoBehaviour {
         score2 = 0;
         lives1 = livesMax;
         lives2 = livesMax;
-        courtTimer1 = 0;
-        courtTimer2 = 0;
+        courtTimer1 = maxCourtTimer;
+        courtTimer2 = maxCourtTimer;
         UpdateText();
         balls = new List<GameObject>();
         ballTypes = new GameObject[] { ball, ballBounce, ballCurve };
@@ -59,12 +59,12 @@ public class ScoreboardManager : MonoBehaviour {
         }
 
         // count up courttimer1 if there is no balls in court 1
-        if (ballsInCourt1 == 0 && courtTimer1 < maxCourtTimer) {
-            courtTimer1 += Time.deltaTime;
+        if (ballsInCourt1 == 0 && courtTimer1 > 0) {
+            courtTimer1 -= Time.deltaTime;
 
             // if timer is over max, set to max
-            if (courtTimer1 > maxCourtTimer) {
-                courtTimer1 = maxCourtTimer;
+            if (courtTimer1 < 0) {
+                courtTimer1 = 0;
             }
 
             // if timer is under half a second, blink
@@ -76,18 +76,18 @@ public class ScoreboardManager : MonoBehaviour {
             }
             UpdateText();
         } else {
-            if (courtTimer1 < maxCourtTimer) {
+            if (courtTimer1 > 0) {
                 time1Text.color = Color.gray;
             }
         }
 
         // count up courttimer2 if there is no balls in court 2
-        if (ballsInCourt2 == 0 && courtTimer2 < maxCourtTimer) {
-            courtTimer2 += Time.deltaTime;
+        if (ballsInCourt2 == 0 && courtTimer2 > 0) {
+            courtTimer2 -= Time.deltaTime;
 
             // if timer is over max, set to max
-            if (courtTimer2 > maxCourtTimer) {
-                courtTimer2 = maxCourtTimer;
+            if (courtTimer2 < 0) {
+                courtTimer2 = 0;
             }
 
             // if timer is over half a second, blink
@@ -99,21 +99,21 @@ public class ScoreboardManager : MonoBehaviour {
             }
             UpdateText();
         } else {
-            if (courtTimer2 < maxCourtTimer) {
+            if (courtTimer2 > 0) {
                 time2Text.color = Color.gray;
             }
         }
 
         // add score if either courtTimer is over max
-        if (courtTimer1 == maxCourtTimer) {
+        if (courtTimer1 == 0) {
             // increment, so it's not exactly max anymore (so it doesn't count twice)
-            courtTimer1 += 0.1f;
+            courtTimer1 -= 0.1f;
             spotlight.GetComponent<SpotlightManager>().SetTarget(time1Text.transform.position);
             AddScore(1);
         }
-        if (courtTimer2 == maxCourtTimer) {
+        if (courtTimer2 == 0) {
             // increment, so it's not exactly max anymore (so it doesn't count twice)
-            courtTimer2 += 0.1f;
+            courtTimer2 -= 0.1f;
             spotlight.GetComponent<SpotlightManager>().SetTarget(time2Text.transform.position);
             AddScore(2);
         }
@@ -189,8 +189,8 @@ public class ScoreboardManager : MonoBehaviour {
 
         lives1 = livesMax;
         lives2 = livesMax;
-        courtTimer1 = 0;
-        courtTimer2 = 0;
+        courtTimer1 = maxCourtTimer;
+        courtTimer2 = maxCourtTimer;
         nextBallSpawn = 0;
         UpdateText();
 
