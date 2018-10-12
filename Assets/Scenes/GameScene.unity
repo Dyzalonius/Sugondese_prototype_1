@@ -230,6 +230,31 @@ Prefab:
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1519969390}
+    - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: minBallCountMid
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: minBallCountTotal
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: livesMax
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390816352270376, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Lives: 3'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114151698718592656, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Lives: 3'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36fe2c9e3c563cc418d22ae009a00c3b, type: 2}
   m_IsPrefabAsset: 0

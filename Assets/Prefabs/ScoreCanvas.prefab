@@ -406,7 +406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Lives: 5'
+  m_Text: 'Lives: 3'
 --- !u!114 &114191718214490212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -481,8 +481,10 @@ MonoBehaviour:
   player1: {fileID: 0}
   player2: {fileID: 0}
   scoreToWin: 3
-  livesMax: 1
+  livesMax: 3
   countdownTimerMax: 3
+  minBallCountMid: 3
+  minBallCountTotal: 5
   resetDelay: 1.5
   maxCourtTimer: 5
   lives1Text: {fileID: 114390816352270376}
@@ -549,7 +551,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Lives: 5'
+  m_Text: 'Lives: 3'
 --- !u!114 &114599986274726444
 MonoBehaviour:
   m_ObjectHideFlags: 1

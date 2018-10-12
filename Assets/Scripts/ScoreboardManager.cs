@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class ScoreboardManager : MonoBehaviour {
 
     int score1, score2, lives1, lives2;
-    [SerializeField] GameObject player1, player2;
-    [SerializeField] int scoreToWin, livesMax, countdownTimerMax;
-    [SerializeField] float resetDelay, maxCourtTimer;
-    [SerializeField] Text lives1Text, lives2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
-    [SerializeField] CanvasGroup spotlight;
+    public GameObject player1, player2;
+    public int scoreToWin, livesMax, countdownTimerMax, minBallCountMid, minBallCountTotal;
+    public float resetDelay, maxCourtTimer;
+    public Text lives1Text, lives2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
+    public CanvasGroup spotlight;
     List<GameObject> balls;
     float[][] ballSpawns = new float[][] { new float[] {0, -1.245f, 1.245f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
     public GameObject ball, ballBounce, ballCurve;
@@ -33,7 +33,7 @@ public class ScoreboardManager : MonoBehaviour {
         ballTypes = new GameObject[] { ball, ballBounce, ballCurve };
         nextBallSpawn = 0;
         countdownTimer = countdownTimerMax+1;
-        GenerateBallsToSpawn(0, 2);
+        GenerateBallsToSpawn(0, 0);
         ResetRound();
     }
 	
@@ -208,12 +208,20 @@ public class ScoreboardManager : MonoBehaviour {
     }
 
     void GenerateBallsToSpawn(int loserID, int winnerLivesLeft) {
-        ballsToSpawn[0].Add(1);
-        ballsToSpawn[0].Add(0);
-        ballsToSpawn[0].Add(0);
-        
+        // spawn one ball on the losing side, for every life the winner had left
         for (int i = 0; i < winnerLivesLeft; i++) {
-            ballsToSpawn[loserID].Add(2);
+            ballsToSpawn[loserID].Add(ballTypes.Length);
+        }
+
+        // calculate how many balls to spawn in the middle
+        int midBallCount = minBallCountTotal - winnerLivesLeft;
+        if (midBallCount < minBallCountMid) {
+            midBallCount = minBallCountMid;
+        }
+
+        // spawn balls in the middle
+        for (int i = 0; i < midBallCount; i++) {
+            ballsToSpawn[0].Add(0);
         }
     }
 
@@ -244,6 +252,9 @@ public class ScoreboardManager : MonoBehaviour {
     }
 
     void CreateBall(int ballTypeIndex, int xPosition) {
+        if (ballTypeIndex == ballTypes.Length) {
+            ballTypeIndex = (int)Random.Range(1, ballTypes.Length - 0.01f);
+        }
         GameObject ballType = ballTypes[ballTypeIndex];
         balls.Add(Instantiate(ballType, new Vector3(ballSpawns[0][xPosition], ballSpawns[1][nextBallSpawn],0), Quaternion.Euler(0, 0, 0)));
     }
