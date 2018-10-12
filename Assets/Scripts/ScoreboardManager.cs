@@ -92,10 +92,10 @@ public class ScoreboardManager : MonoBehaviour {
 
             // if timer is over half a second, blink
             if (courtTimer2 % 1 > 0.5) {
-                time2Text.color = Color.white;
+                time2Text.color = Color.clear;
             }
             else {
-                time2Text.color = Color.clear;
+                time2Text.color = Color.white;
             }
             UpdateText();
         } else {
