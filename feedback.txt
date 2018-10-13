@@ -43,3 +43,23 @@ Beetje onduidelijk dat je kon richten etc
 TWEAKS
 Dodgen zag er te makkelijk uit
 Dodgen was te makkelijk
+
+
+---------------------------------------------------------
+Playtest sessie 2:
+- Was de feedbackloop duidelijk?
+- Is de negatieve feedback te sterk/zwak?
+- Is het te hectisch/saai?
+- Is de courttimer duidelijk?
+- Is er een verschil tussen early en late round?
+- Suggesties?
+
+Duidelijk
+Te zwak misschien, lijnen dichter bij de player zou het sterker maken
+Niet te hectisch, niet te saai
+Het doel van de timer is duidelijk, maar niet intuitief
+Timer duidelijker maken, meer feedback, bijvoorbeeld zowel audio (fluitje ofzo) als visueel (jouw helft van het veld rood maken), en de timers omdraaien.
+De game in 1 stijl houden
+Special rounds, textthings, dash
+Main menu achtig iets (licht gaat aan, en je hoort muziek in de background, je kunt gewoon rondlopen, controls staan op de grond gepaste, en scoreboard staat uit, je kunt starten door allebij 'fire' ingedrukt te houden voor een while)
+Speedball (steeds sneller), Portalball (gaat door muren), Waterball (explodeert, doet damage), Lijmball (explodeert, creeert AOE slow), Splitball (split op middenlijn), Clusterball (clustert on collision?), Speedball (versnelt tot collision).
