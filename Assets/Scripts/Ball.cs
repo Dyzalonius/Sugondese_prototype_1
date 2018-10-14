@@ -31,8 +31,8 @@ public class Ball : MonoBehaviour {
 
     protected virtual void Move() {
         var currentPos = rb.position;
-        var newX = currentPos.x + direction.x * speed * Time.deltaTime * Time.timeScale;
-        var newY = currentPos.y + direction.y * speed * Time.deltaTime * Time.timeScale;
+        var newX = currentPos.x + direction.x * speed * Time.fixedDeltaTime * Time.timeScale;
+        var newY = currentPos.y + direction.y * speed * Time.fixedDeltaTime * Time.timeScale;
 
         //invert speeds if outside boundaries
         if (newX < minX || newX > maxX) {

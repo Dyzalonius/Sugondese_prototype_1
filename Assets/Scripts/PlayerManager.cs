@@ -49,8 +49,8 @@ public class PlayerManager : MonoBehaviour {
     void Move() {
         var currentPos = rb.position;
 
-        var x = Input.GetAxis(moveHorizontalInput) * Time.deltaTime * Time.timeScale * 5.0f;
-        var y = Input.GetAxis(moveVerticalInput) * Time.deltaTime * Time.timeScale * 5.0f;
+        var x = Input.GetAxis(moveHorizontalInput) * Time.fixedDeltaTime * Time.timeScale * 5.0f;
+        var y = Input.GetAxis(moveVerticalInput) * Time.fixedDeltaTime * Time.timeScale * 5.0f;
 
         if (countdownLive) {
             x = 0;

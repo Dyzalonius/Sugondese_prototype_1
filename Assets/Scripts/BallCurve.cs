@@ -16,7 +16,7 @@ public class BallCurve : Ball {
         angle = Vector3.SignedAngle(direction, Vector3.right, Vector3.back);
 
         // calc new angle
-        angle += curveAmount / (Time.deltaTime * Time.timeScale);
+        angle += curveAmount / Time.fixedDeltaTime * Time.timeScale;
 
         // convert new angle to new direction
         Vector3 newDirection = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0);
