@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114525955321039930}
   - component: {fileID: 58637997530513426}
   m_Layer: 0
-  m_Name: Waterzone
+  m_Name: WaterParticle
   m_TagString: water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

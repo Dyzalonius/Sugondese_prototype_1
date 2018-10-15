@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BallWater : BallBounce {
 
-    public float timeBetweenWaterAreas;
-    float currentTimeBetweenWaterAreas;
-    public GameObject waterArea;
+    public float timeBetweenWaterParticles;
+    float currentTimeBetweenWaterParticles;
+    public GameObject waterParticle;
+    public List<GameObject> waterParticles;
     bool isActive;
 
     protected override void Start() {
@@ -16,9 +18,9 @@ public class BallWater : BallBounce {
 
     protected override void Move() {
         if (isActive) {
-            currentTimeBetweenWaterAreas += Time.fixedDeltaTime * Time.timeScale;
-            if (currentTimeBetweenWaterAreas > timeBetweenWaterAreas) {
-                currentTimeBetweenWaterAreas = 0;
+            currentTimeBetweenWaterParticles += Time.fixedDeltaTime * Time.timeScale;
+            if (currentTimeBetweenWaterParticles > timeBetweenWaterParticles) {
+                currentTimeBetweenWaterParticles = 0;
                 Explode();
             }
         }
@@ -41,6 +43,15 @@ public class BallWater : BallBounce {
     }
 
     void Explode() {
-        Instantiate(waterArea, transform.position, Quaternion.Euler(0, 0, 0));
+        waterParticles.Add(Instantiate(waterParticle, transform.position, Quaternion.Euler(0, 0, 0)));
+    }
+
+    public void OnDestroy() {
+        for (int i = waterParticles.Count - 1; i >= 0; i--) {
+            var particle = waterParticles.ElementAt(i);
+            waterParticles.RemoveAt(i);
+            Destroy(particle);
+        }
+        Destroy(gameObject);
     }
 }

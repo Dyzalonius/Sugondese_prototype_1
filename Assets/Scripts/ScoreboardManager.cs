@@ -13,7 +13,7 @@ public class ScoreboardManager : MonoBehaviour {
     public Text lives1Text, lives2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
     public CanvasGroup spotlight;
     List<GameObject> balls;
-    float[][] ballSpawns = new float[][] { new float[] {0, -1.245f, 1.245f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
+    float[][] ballSpawns = new float[][] { new float[] {0, -1.78f, 1.78f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
     public GameObject ball, ballBounce, ballCurve, ballWater;
     GameObject[] ballTypes;
     List<int>[] ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
