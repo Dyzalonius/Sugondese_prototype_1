@@ -10,7 +10,7 @@ public class ScoreboardManager : MonoBehaviour {
     public GameObject player1, player2;
     public int scoreToWin, hitsMax, countdownTimerMax, minBallCountMid, minBallCountTotal;
     public float resetDelay, maxCourtTimer;
-    public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
+    public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText1, countdownText2;
     public CanvasGroup spotlight;
     List<GameObject> balls;
     float[][] ballSpawns = new float[][] { new float[] {0, -1.78f, 1.78f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
@@ -280,17 +280,20 @@ public class ScoreboardManager : MonoBehaviour {
         countdownTimer--;
         switch (countdownTimer) {
             case -1:
-                countdownText.text = "";
+                countdownText1.text = "";
+                countdownText2.text = "";
                 countdownTimer = countdownTimerMax + 1;
                 break;
             case 0:
-                countdownText.text = "GO!";
+                countdownText1.text = "GO!";
+                countdownText2.text = "GO!";
                 player1.GetComponent<PlayerManager>().countdownLive = false;
                 player2.GetComponent<PlayerManager>().countdownLive = false;
                 Invoke("Countdown", 1f);
                 break;
             default:
-                countdownText.text = "" + countdownTimer;
+                countdownText1.text = "" + countdownTimer;
+                countdownText2.text = "" + countdownTimer;
                 Invoke("Countdown", 1f);
                 break;
         }
