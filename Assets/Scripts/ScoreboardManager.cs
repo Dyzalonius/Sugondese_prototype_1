@@ -122,18 +122,18 @@ public class ScoreboardManager : MonoBehaviour {
     public void RemoveLife(int teamID) {
         switch (teamID) {
             case 1:
-                hits1++;
-                UpdateText();
-
-                if (hits1 == hitsMax) {
-                    AddScore(2);
-                }
-                break;
-            case 2:
                 hits2++;
                 UpdateText();
 
                 if (hits2 == hitsMax) {
+                    AddScore(2);
+                }
+                break;
+            case 2:
+                hits1++;
+                UpdateText();
+
+                if (hits1 == hitsMax) {
                     AddScore(1);
                 }
                 break;
