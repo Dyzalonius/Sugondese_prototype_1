@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallBounce : Ball {
 
-    int bounceCount;
+    protected int bounceCount;
     public int maxBounceCount;
 
     protected override void Start() {

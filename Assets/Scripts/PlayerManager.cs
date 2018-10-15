@@ -9,7 +9,8 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField] GameObject crosshair;
     [SerializeField] CanvasGroup spotlight, scoreboard;
     [SerializeField] string throwInput, moveHorizontalInput, moveVerticalInput, aimHorizontalInput, aimVerticalInput;
-    public float minX, maxX, minY, maxY;
+    public float minX, maxX, minY, maxY, maxSpeed;
+    float speed;
     [SerializeField] int teamID;
 
     Rigidbody2D rb;
@@ -28,6 +29,7 @@ public class PlayerManager : MonoBehaviour {
         spawnPosition = transform.position;
         roundLive = true;
         countdownLive = false;
+        speed = maxSpeed;
     }
 	
 	// Update is called once per frame
@@ -47,19 +49,19 @@ public class PlayerManager : MonoBehaviour {
 
     // Player movement
     void Move() {
-        var currentPos = rb.position;
-
-        var x = Input.GetAxis(moveHorizontalInput) * Time.fixedDeltaTime * Time.timeScale * 5.0f;
-        var y = Input.GetAxis(moveVerticalInput) * Time.fixedDeltaTime * Time.timeScale * 5.0f;
+        Vector3 currentPos = rb.position;
+        Vector3 direction = new Vector3(Input.GetAxis(moveHorizontalInput), Input.GetAxis(moveVerticalInput), 0);
+        direction.Normalize();
+        direction *= Time.fixedDeltaTime * Time.timeScale * speed;
 
         if (countdownLive) {
-            x = 0;
+            direction.x = 0;
         }
 
         // force player to stay within boundaries
         player.transform.position = new Vector2(
-            Mathf.Clamp(x + currentPos.x, minX, maxX),
-            Mathf.Clamp(y + currentPos.y, minY, maxY)
+            Mathf.Clamp(direction.x + currentPos.x, minX, maxX),
+            Mathf.Clamp(direction.y + currentPos.y, minY, maxY)
         );
     }
 
@@ -95,12 +97,14 @@ public class PlayerManager : MonoBehaviour {
                 break;
 
             case "water":
-                if (other.gameObject.GetComponent<WaterEffect>().active) {
-                    spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
-                    PlayerHit();
-                }
+                speed = maxSpeed * other.gameObject.GetComponent<WaterEffect>().speedReductionFactor;
+                Invoke("ResetSpeed", 0.5f);
                 break;
         }
+    }
+
+    void ResetSpeed() {
+        speed = maxSpeed;
     }
 
     void PlayerHit() {
