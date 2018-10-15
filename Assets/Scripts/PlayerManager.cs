@@ -98,13 +98,17 @@ public class PlayerManager : MonoBehaviour {
 
             case "water":
                 speed = maxSpeed * other.gameObject.GetComponent<WaterEffect>().speedReductionFactor;
-                Invoke("ResetSpeed", 0.5f);
                 break;
         }
     }
 
-    void ResetSpeed() {
-        speed = maxSpeed;
+    private void OnTriggerExit2D(Collider2D other) {
+        switch (other.gameObject.tag) {
+            case "water":
+                speed = maxSpeed;
+                break;
+
+        }
     }
 
     void PlayerHit() {

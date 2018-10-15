@@ -58,7 +58,7 @@ MonoBehaviour:
   timeToMaxScale: 0.3
   timeBeforeRemove: 4
   timeToRemove: 1
-  speedReductionFactor: 0.3
+  speedReductionFactor: 0.5
   startScaleFactor: 0.5
 --- !u!212 &212532693077943708
 SpriteRenderer:

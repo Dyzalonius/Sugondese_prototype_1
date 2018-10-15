@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class ScoreboardManager : MonoBehaviour {
 
-    int score1, score2, lives1, lives2;
+    int score1, score2, hits1, hits2;
     public GameObject player1, player2;
-    public int scoreToWin, livesMax, countdownTimerMax, minBallCountMid, minBallCountTotal;
+    public int scoreToWin, hitsMax, countdownTimerMax, minBallCountMid, minBallCountTotal;
     public float resetDelay, maxCourtTimer;
-    public Text lives1Text, lives2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
+    public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText;
     public CanvasGroup spotlight;
     List<GameObject> balls;
     float[][] ballSpawns = new float[][] { new float[] {0, -1.78f, 1.78f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
@@ -24,8 +24,8 @@ public class ScoreboardManager : MonoBehaviour {
     void Start () {
         score1 = 0;
         score2 = 0;
-        lives1 = livesMax;
-        lives2 = livesMax;
+        hits1 = 0;
+        hits2 = 0;
         courtTimer1 = maxCourtTimer;
         courtTimer2 = maxCourtTimer;
         UpdateText();
@@ -122,18 +122,18 @@ public class ScoreboardManager : MonoBehaviour {
     public void RemoveLife(int teamID) {
         switch (teamID) {
             case 1:
-                lives1--;
+                hits1++;
                 UpdateText();
 
-                if (lives1 == 0) {
+                if (hits1 == hitsMax) {
                     AddScore(2);
                 }
                 break;
             case 2:
-                lives2--;
+                hits2++;
                 UpdateText();
 
-                if (lives2 == 0) {
+                if (hits2 == hitsMax) {
                     AddScore(1);
                 }
                 break;
@@ -143,13 +143,13 @@ public class ScoreboardManager : MonoBehaviour {
     void AddScore(int teamID) {
         switch (teamID) {
             case 1:
-                GenerateBallsToSpawn(2, lives1);
+                GenerateBallsToSpawn(2, hits1);
                 score1++;
                 UpdateText();
                 EndRound();
                 break;
             case 2:
-                GenerateBallsToSpawn(1, lives2);
+                GenerateBallsToSpawn(1, hits2);
                 score2++;
                 UpdateText();
                 EndRound();
@@ -158,10 +158,27 @@ public class ScoreboardManager : MonoBehaviour {
     }
 
     void UpdateText() {
+
+        string hits1string = "";
+        for (int i = 0; i < hits1; i++) {
+            hits1string += "X";
+        }
+        for (int i = 0; i < hitsMax-hits1; i++) {
+            hits1string += "-";
+        }
+
+        string hits2string = "";
+        for (int i = 0; i < hits2; i++) {
+            hits2string += "X";
+        }
+        for (int i = 0; i < hitsMax - hits2; i++) {
+            hits2string += "-";
+        }
+
+        hits1Text.text = hits1string;
+        hits2Text.text = hits2string;
         score1Text.text = "" + score1;
         score2Text.text = "" + score2;
-        lives1Text.text = "Lives: " + lives1;
-        lives2Text.text = "Lives: " + lives2;
 
         if (courtTimer1 < 10) {
             time1Text.text = "0:0" + (int)courtTimer1;
@@ -187,8 +204,8 @@ public class ScoreboardManager : MonoBehaviour {
         player1.GetComponent<PlayerManager>().ResetRound();
         player2.GetComponent<PlayerManager>().ResetRound();
 
-        lives1 = livesMax;
-        lives2 = livesMax;
+        hits1 = 0;
+        hits2 = 0;
         courtTimer1 = maxCourtTimer;
         courtTimer2 = maxCourtTimer;
         nextBallSpawn = 0;
@@ -207,14 +224,14 @@ public class ScoreboardManager : MonoBehaviour {
         }
     }
 
-    void GenerateBallsToSpawn(int loserID, int winnerLivesLeft) {
+    void GenerateBallsToSpawn(int loserID, int winnerhitsLeft) {
         // spawn one ball on the losing side, for every life the winner had left
-        for (int i = 0; i < winnerLivesLeft; i++) {
+        for (int i = 0; i < winnerhitsLeft; i++) {
             ballsToSpawn[loserID].Add(ballTypes.Length);
         }
 
         // calculate how many balls to spawn in the middle
-        int midBallCount = minBallCountTotal - winnerLivesLeft;
+        int midBallCount = minBallCountTotal - winnerhitsLeft;
         if (midBallCount < minBallCountMid) {
             midBallCount = minBallCountMid;
         }

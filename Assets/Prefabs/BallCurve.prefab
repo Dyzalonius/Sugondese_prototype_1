@@ -100,7 +100,7 @@ MonoBehaviour:
   speedDropRate: 0.9
   speedDivisionOnBounce: 3
   speedCutOff: 0.2
-  curveAmount: 0.03
+  curveAmount: 0.035
 --- !u!212 &212711464022983626
 SpriteRenderer:
   m_ObjectHideFlags: 1
