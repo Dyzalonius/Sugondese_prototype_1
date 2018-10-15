@@ -76,21 +76,30 @@ public class PlayerManager : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "ballNew") {
-            // Pickup ball
-            if (other.gameObject.GetComponent<Ball>().onGround && balls.Count < 3) {
-                Pickup(other.gameObject);
-            }
+        switch (other.gameObject.tag) {
+            case "ball":
+                // Pickup ball
+                if (other.gameObject.GetComponent<Ball>().onGround && balls.Count < 3) {
+                    Pickup(other.gameObject);
+                }
 
-            // Get hit
-            if (other.gameObject.GetComponent<Ball>().flying) {
-                other.gameObject.GetComponent<Ball>().OnBounce(transform.position);
+                // Get hit
+                if (other.gameObject.GetComponent<Ball>().flying) {
+                    other.gameObject.GetComponent<Ball>().OnBounce(transform.position);
 
-                if (roundLive) {
+                    if (roundLive) {
+                        spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
+                        PlayerHit();
+                    }
+                }
+                break;
+
+            case "water":
+                if (other.gameObject.GetComponent<WaterEffect>().active) {
                     spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
                     PlayerHit();
                 }
-            }
+                break;
         }
     }
 

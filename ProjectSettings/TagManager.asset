@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - ballNew
+  - player1
+  - player2
+  - ball
+  - water
   layers:
   - Default
   - TransparentFX
@@ -39,11 +42,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
+  - name: Floor
     uniqueID: 1293316975
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Wall
+    uniqueID: 394649109
     locked: 0
   - name: Players
     uniqueID: 4068169371

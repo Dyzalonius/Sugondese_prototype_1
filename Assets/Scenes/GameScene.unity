@@ -326,6 +326,10 @@ Prefab:
       propertyPath: scoreboard
       value: 
       objectReference: {fileID: 303881006}
+    - target: {fileID: 1143479648192848, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}
+      propertyPath: m_TagString
+      value: player2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}
   m_IsPrefabAsset: 0
@@ -658,6 +662,10 @@ Prefab:
     - target: {fileID: 1746076062835466, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}
       propertyPath: m_Name
       value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143479648192848, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}
+      propertyPath: m_TagString
+      value: player1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10e1edf1bc8c17d4991a18fe6bf3645c, type: 2}

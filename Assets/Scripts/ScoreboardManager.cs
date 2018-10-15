@@ -14,7 +14,7 @@ public class ScoreboardManager : MonoBehaviour {
     public CanvasGroup spotlight;
     List<GameObject> balls;
     float[][] ballSpawns = new float[][] { new float[] {0, -1.245f, 1.245f }, new float[] {-1.5f, 0, -3f, 1.5f, -4.5f} };
-    public GameObject ball, ballBounce, ballCurve;
+    public GameObject ball, ballBounce, ballCurve, ballWater;
     GameObject[] ballTypes;
     List<int>[] ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
     int nextBallSpawn, countdownTimer;
@@ -30,7 +30,7 @@ public class ScoreboardManager : MonoBehaviour {
         courtTimer2 = maxCourtTimer;
         UpdateText();
         balls = new List<GameObject>();
-        ballTypes = new GameObject[] { ball, ballBounce, ballCurve };
+        ballTypes = new GameObject[] { ball, ballBounce, ballCurve, ballWater };
         nextBallSpawn = 0;
         countdownTimer = countdownTimerMax+1;
         GenerateBallsToSpawn(0, 0);
