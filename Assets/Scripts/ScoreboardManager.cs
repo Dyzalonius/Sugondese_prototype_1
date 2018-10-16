@@ -34,7 +34,7 @@ public class ScoreboardManager : MonoBehaviour {
         nextBallSpawn = 0;
         countdownTimer = countdownTimerMax+1;
         GenerateBallsToSpawn(0, 0);
-        ResetRound();
+        Invoke("ResetRound", 0.1f); // needs a delay, to make sure that players are initialized
     }
 	
 	// Update is called once per frame
@@ -143,13 +143,13 @@ public class ScoreboardManager : MonoBehaviour {
     void AddScore(int teamID) {
         switch (teamID) {
             case 1:
-                GenerateBallsToSpawn(2, hits1);
+                GenerateBallsToSpawn(2, hitsMax - hits2);
                 score1++;
                 UpdateText();
                 EndRound();
                 break;
             case 2:
-                GenerateBallsToSpawn(1, hits2);
+                GenerateBallsToSpawn(1, hitsMax - hits1);
                 score2++;
                 UpdateText();
                 EndRound();
@@ -224,14 +224,14 @@ public class ScoreboardManager : MonoBehaviour {
         }
     }
 
-    void GenerateBallsToSpawn(int loserID, int winnerhitsLeft) {
+    void GenerateBallsToSpawn(int loserID, int hitsLeft) {
         // spawn one ball on the losing side, for every life the winner had left
-        for (int i = 0; i < winnerhitsLeft; i++) {
+        for (int i = 0; i < hitsLeft; i++) {
             ballsToSpawn[loserID].Add(ballTypes.Length);
         }
 
         // calculate how many balls to spawn in the middle
-        int midBallCount = minBallCountTotal - winnerhitsLeft;
+        int midBallCount = minBallCountTotal - hitsLeft;
         if (midBallCount < minBallCountMid) {
             midBallCount = minBallCountMid;
         }

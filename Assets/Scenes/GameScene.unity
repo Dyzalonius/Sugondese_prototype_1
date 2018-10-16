@@ -560,6 +560,16 @@ Prefab:
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1519969390}
+    - target: {fileID: 114356394992265838, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114599986274726444, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36fe2c9e3c563cc418d22ae009a00c3b, type: 2}
   m_IsPrefabAsset: 0

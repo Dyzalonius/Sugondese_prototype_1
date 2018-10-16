@@ -23,10 +23,10 @@ public class PlayerManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        rb = GetComponent<Rigidbody2D>();
-        aimDirection = new Vector3(0, 1, 0);
         balls = new List<GameObject>();
+        rb = GetComponent<Rigidbody2D>();
         spawnPosition = transform.position;
+        aimDirection = new Vector3(0, 1, 0);
         roundLive = true;
         countdownLive = false;
         speed = maxSpeed;
