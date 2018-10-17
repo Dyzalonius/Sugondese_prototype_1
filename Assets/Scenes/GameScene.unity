@@ -547,29 +547,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
         type: 2}
-      propertyPath: player1
-      value: 
-      objectReference: {fileID: 908290894}
-    - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
-        type: 2}
-      propertyPath: player2
-      value: 
-      objectReference: {fileID: 840010441}
-    - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
-        type: 2}
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1519969390}
-    - target: {fileID: 114356394992265838, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+    - target: {fileID: 114327081415217388, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
         type: 2}
-      propertyPath: m_Text
+      propertyPath: arena
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114599986274726444, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
-        type: 2}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1655485000}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36fe2c9e3c563cc418d22ae009a00c3b, type: 2}
   m_IsPrefabAsset: 0
@@ -617,9 +602,29 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114597779633809864, guid: 1526dcc28acf90e4a812517a28411a02,
+        type: 2}
+      propertyPath: scoreBoard
+      value: 
+      objectReference: {fileID: 303881006}
+    - target: {fileID: 114597779633809864, guid: 1526dcc28acf90e4a812517a28411a02,
+        type: 2}
+      propertyPath: player1
+      value: 
+      objectReference: {fileID: 908290894}
+    - target: {fileID: 114597779633809864, guid: 1526dcc28acf90e4a812517a28411a02,
+        type: 2}
+      propertyPath: player2
+      value: 
+      objectReference: {fileID: 840010441}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1526dcc28acf90e4a812517a28411a02, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1655485000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1639345214344952, guid: 1526dcc28acf90e4a812517a28411a02,
+    type: 2}
+  m_PrefabInternal: {fileID: 1655484999}
 --- !u!1001 &1832226382
 Prefab:
   m_ObjectHideFlags: 0

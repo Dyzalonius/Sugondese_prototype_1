@@ -141,7 +141,7 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    public void ResetRound() {
+    public void StartRound() {
         roundLive = true;
         countdownLive = true;
         balls.Clear();

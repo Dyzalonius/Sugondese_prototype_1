@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4201754798515184}
-  - component: {fileID: 61717164562671012}
+  - component: {fileID: 114597779633809864}
   m_Layer: 0
   m_Name: Arena
   m_TagString: Untagged
@@ -130,31 +130,27 @@ Transform:
   m_Father: {fileID: 4201754798515184}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61717164562671012
-BoxCollider2D:
+--- !u!114 &114597779633809864
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639345214344952}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.41}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.4, y: 3.6}
-    newSize: {x: 6.4, y: 3.6}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4.5, y: 2.3}
-  m_EdgeRadius: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9ea392837f49b4cab1623a4b9b7c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minBallCountMid: 3
+  minBallCountTotal: 5
+  resetDelay: 1.5
+  scoreBoard: {fileID: 0}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  ball: {fileID: 1390377918576082, guid: b23c0aa561e98604a926b5d05673b42e, type: 2}
+  ballBounce: {fileID: 1390377918576082, guid: 9a0a87283fbfaea46823c9c3b81f36a9, type: 2}
+  ballCurve: {fileID: 1390377918576082, guid: 8f0f2730474db8c42a7462d2a37cd30f, type: 2}
+  ballWater: {fileID: 1390377918576082, guid: cb5bc9384a42061478eccfcb70a99c90, type: 2}
 --- !u!212 &212264310981272154
 SpriteRenderer:
   m_ObjectHideFlags: 1

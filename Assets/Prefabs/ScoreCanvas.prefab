@@ -810,14 +810,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7f596f8e6c4484eb3a8d85c4f2091f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 0}
-  player2: {fileID: 0}
   scoreToWin: 3
   hitsMax: 3
   countdownTimerMax: 3
-  minBallCountMid: 3
-  minBallCountTotal: 5
-  resetDelay: 1.5
   maxCourtTimer: 5
   hits1Text: {fileID: 114503330688129734}
   hits2Text: {fileID: 114903010737607876}
@@ -828,10 +823,7 @@ MonoBehaviour:
   countdownText1: {fileID: 114356394992265838}
   countdownText2: {fileID: 114599986274726444}
   spotlight: {fileID: 0}
-  ball: {fileID: 1390377918576082, guid: b23c0aa561e98604a926b5d05673b42e, type: 2}
-  ballBounce: {fileID: 1390377918576082, guid: 9a0a87283fbfaea46823c9c3b81f36a9, type: 2}
-  ballCurve: {fileID: 1390377918576082, guid: 8f0f2730474db8c42a7462d2a37cd30f, type: 2}
-  ballWater: {fileID: 1390377918576082, guid: cb5bc9384a42061478eccfcb70a99c90, type: 2}
+  arena: {fileID: 0}
 --- !u!114 &114350779662773182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -885,7 +877,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 
 --- !u!114 &114390816352270376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1044,7 +1036,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 
 --- !u!114 &114683718230303702
 MonoBehaviour:
   m_ObjectHideFlags: 1
