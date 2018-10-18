@@ -51,14 +51,14 @@ TagManager:
   - name: Wall
     uniqueID: 394649109
     locked: 0
+  - name: UI
+    uniqueID: 1674776541
+    locked: 0
   - name: Players
     uniqueID: 4068169371
     locked: 0
   - name: Balls
     uniqueID: 829323345
-    locked: 0
-  - name: UI
-    uniqueID: 1674776541
     locked: 0
   - name: Spotlight
     uniqueID: 3042892183

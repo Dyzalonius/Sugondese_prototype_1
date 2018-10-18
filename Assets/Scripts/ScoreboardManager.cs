@@ -9,7 +9,7 @@ public class ScoreboardManager : MonoBehaviour {
     public int scoreToWin, hitsMax, countdownTimerMax;
     public float maxCourtTimer, timeToReadyUp, readyUpDeadzone;
     public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText1, countdownText2;
-    public GameObject readyGroup1, readyGroup2, readyBlock1, readyBlock2, arena;
+    public GameObject readyGroup1, readyGroup2, readyBlock1, readyBlock2, tutorial1, tutorial2, arena;
     public CanvasGroup spotlight;
 
     int score1, score2, hits1, hits2;
@@ -27,7 +27,6 @@ public class ScoreboardManager : MonoBehaviour {
         courtTimer2 = maxCourtTimer;
         UpdateText();
         countdownTimer = countdownTimerMax + 1;
-        enabled = false;
 
         gameManager = arena.GetComponent<GameManager>();
 
@@ -38,13 +37,10 @@ public class ScoreboardManager : MonoBehaviour {
 
     void FixedUpdate() {
         if (gameManager.warmupLive) {
-            float movementFloat1 = Mathf.Sin(Time.fixedTime);
-            float movementFloat2 = Mathf.Sin(Time.fixedTime + 1);
-
-            readyGroup1.transform.Rotate(0, 0, movementFloat1 * 5f);
-            readyGroup1.transform.position += new Vector3(0, movementFloat1 / 2f, 0);
-            readyGroup2.transform.Rotate(0, 0, movementFloat2 * 5f);
-            readyGroup2.transform.position += new Vector3(0, movementFloat2 / 2f, 0);
+            float movementFloat1 = Mathf.Sin(Time.fixedTime * 2);
+            float movementFloat2 = Mathf.Sin(Time.fixedTime * 2 + 1);
+            readyGroup1.transform.position += new Vector3(0, movementFloat1 * 0.002f, 0);
+            readyGroup2.transform.position += new Vector3(0, movementFloat2 * 0.002f, 0);
         }
     }
 
@@ -182,12 +178,16 @@ public class ScoreboardManager : MonoBehaviour {
     public void StartGame() {
         readyGroup1.SetActive(false);
         readyGroup2.SetActive(false);
+        tutorial1.SetActive(false);
+        tutorial2.SetActive(false);
         TurnOn();
     }
 
     public void StartWarmup() {
         readyGroup1.SetActive(true);
         readyGroup2.SetActive(true);
+        tutorial1.SetActive(true);
+        tutorial2.SetActive(true);
         TurnOff();
     }
 

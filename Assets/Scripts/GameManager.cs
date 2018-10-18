@@ -41,8 +41,8 @@ public class GameManager : MonoBehaviour {
         playerManager2 = player2.GetComponent<PlayerManager>();
 
         GenerateBallsToSpawn(0, 0);
-        playerManager1.SetBoundaries(team0Boundaries);
-        playerManager2.SetBoundaries(team0Boundaries);
+        playerManager1.SetBoundaries(team1Boundaries);
+        playerManager2.SetBoundaries(team2Boundaries);
         Invoke("StartWarmup", 0.1f); // needs a delay, to make sure that players are initialized
         //Invoke("StartGame", 10f); // needs a delay, to make sure that players are initialized
     }
@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void StartGame() {
+        gameLive = true;
         scoreboardManager.StartGame();
         ResetRound();
     }

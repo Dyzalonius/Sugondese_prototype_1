@@ -220,6 +220,11 @@ Prefab:
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1519969390}
+    - target: {fileID: 223467044410622368, guid: 36fe2c9e3c563cc418d22ae009a00c3b,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: 1674776541
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36fe2c9e3c563cc418d22ae009a00c3b, type: 2}
   m_IsPrefabAsset: 0
