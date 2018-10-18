@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class ScoreboardManager : MonoBehaviour {
 
     public int scoreToWin, hitsMax, countdownTimerMax;
-    public float maxCourtTimer;
+    public float maxCourtTimer, timeToReadyUp, readyUpDeadzone;
     public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText1, countdownText2;
+    public GameObject readyBlock1, readyBlock2, arena;
     public CanvasGroup spotlight;
-    public GameObject arena;
 
     int score1, score2, hits1, hits2;
     int countdownTimer;
-    float courtTimer1, courtTimer2;
+    float courtTimer1, courtTimer2, ready1, ready2;
     GameManager gameManager;
 
     // Use this for initialization
@@ -27,8 +27,13 @@ public class ScoreboardManager : MonoBehaviour {
         courtTimer2 = maxCourtTimer;
         UpdateText();
         countdownTimer = countdownTimerMax + 1;
+        enabled = false;
 
         gameManager = arena.GetComponent<GameManager>();
+
+        TurnOff();
+        ReadyingUpCancel(1);
+        ReadyingUpCancel(2);
     }
 
     public void Hogg(int teamID) {
@@ -106,7 +111,7 @@ public class ScoreboardManager : MonoBehaviour {
         }
     }
 
-    public void RemoveLife(int teamID) {
+    public void AddHit(int teamID) {
         switch (teamID) {
             case 1:
                 hits2++;
@@ -123,6 +128,71 @@ public class ScoreboardManager : MonoBehaviour {
                 if (hits1 == hitsMax) {
                     AddScore(1);
                 }
+                break;
+        }
+    }
+
+    public void TurnOn() {
+        hits1Text.color = Color.gray;
+        hits2Text.color = Color.gray;
+        score1Text.color = Color.white;
+        score2Text.color = Color.white;
+        time1Text.color = Color.gray;
+        time2Text.color = Color.gray;
+    }
+
+    public void TurnOff() {
+        hits1Text.color = Color.clear;
+        hits2Text.color = Color.clear;
+        score1Text.color = Color.clear;
+        score2Text.color = Color.clear;
+        time1Text.color = Color.clear;
+        time2Text.color = Color.clear;
+    }
+
+    public void ResetRound() {
+        hits1 = 0;
+        hits2 = 0;
+        courtTimer1 = maxCourtTimer;
+        courtTimer2 = maxCourtTimer;
+        UpdateText();
+        Countdown();
+    }
+
+    public void ReadyingUp(int teamID) {
+        switch (teamID) {
+            case 1:
+                ready1 += Time.fixedDeltaTime / timeToReadyUp;
+                if (ready1 > 1f) {
+                    ready1 = 1f;
+                }
+                readyBlock1.GetComponent<RectTransform>().sizeDelta = new Vector2((ready1 - readyUpDeadzone) * 2.4f * (1f / (1f - readyUpDeadzone)), 0.4f);
+                break;
+            case 2:
+                ready2 += Time.fixedDeltaTime / timeToReadyUp;
+                if (ready2 > 1f) {
+                    ready2 = 1f;
+                }
+                readyBlock2.GetComponent<RectTransform>().sizeDelta = new Vector2((ready2 - readyUpDeadzone) * 2.4f * (1f / (1f - readyUpDeadzone)), 0.4f);
+                break;
+        }
+
+        //if (ready1 >= 1f && ready2 >= 1f) {
+        if (ready1 >= 1f) { // SWITCH THIS TO TEST MULTIPLAYER
+            gameManager.EndWarmup();
+        }
+    }
+
+    public void ReadyingUpCancel(int teamID) {
+        switch (teamID) {
+            case 1:
+                ready1 = 0;
+                readyBlock1.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0.4f);
+
+                break;
+            case 2:
+                ready2 = 0;
+                readyBlock2.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0.4f);
                 break;
         }
     }
@@ -181,15 +251,6 @@ public class ScoreboardManager : MonoBehaviour {
         }
     }
 
-    public void StartRound() {
-        hits1 = 0;
-        hits2 = 0;
-        courtTimer1 = maxCourtTimer;
-        courtTimer2 = maxCourtTimer;
-        UpdateText();
-        Countdown();
-    }
-
     void Countdown() {
         countdownTimer--;
         switch (countdownTimer) {
@@ -201,7 +262,7 @@ public class ScoreboardManager : MonoBehaviour {
             case 0:
                 countdownText1.text = "GO!";
                 countdownText2.text = "GO!";
-                gameManager.EndCountdown();
+                gameManager.StartRound();
                 Invoke("Countdown", 1f);
                 break;
             default:

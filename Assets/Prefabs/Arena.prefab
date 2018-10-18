@@ -144,13 +144,33 @@ MonoBehaviour:
   minBallCountMid: 3
   minBallCountTotal: 5
   resetDelay: 1.5
+  team0Boundaries:
+  - -8.2
+  - 8.2
+  - -4.3
+  - 2
+  team1Boundaries:
+  - -8.2
+  - -0.3
+  - -4.3
+  - 2
+  team2Boundaries:
+  - 0.3
+  - 8.2
+  - -4.3
+  - 2
   scoreBoard: {fileID: 0}
+  spotLight: {fileID: 0}
   player1: {fileID: 0}
   player2: {fileID: 0}
   ball: {fileID: 1390377918576082, guid: b23c0aa561e98604a926b5d05673b42e, type: 2}
   ballBounce: {fileID: 1390377918576082, guid: 9a0a87283fbfaea46823c9c3b81f36a9, type: 2}
   ballCurve: {fileID: 1390377918576082, guid: 8f0f2730474db8c42a7462d2a37cd30f, type: 2}
   ballWater: {fileID: 1390377918576082, guid: cb5bc9384a42061478eccfcb70a99c90, type: 2}
+  scoreboardManager: {fileID: 0}
+  spotLightManager: {fileID: 0}
+  playerManager1: {fileID: 0}
+  playerManager2: {fileID: 0}
 --- !u!212 &212264310981272154
 SpriteRenderer:
   m_ObjectHideFlags: 1

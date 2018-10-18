@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour {
     Rigidbody2D rb;
     protected Vector3 direction;
     public bool onGround, flying, dying;
-    [SerializeField] float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnBounce, speedCutOff;
+    public float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnBounce, speedCutOff;
     float speed;
     Vector3 originalPosition;
 

@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour {
 
     public int minBallCountMid, minBallCountTotal;
     public float resetDelay;
-    public CanvasGroup scoreBoard;
+    public float[] team0Boundaries, team1Boundaries, team2Boundaries;
+    public CanvasGroup scoreBoard, spotLight;
     public GameObject player1, player2;
     public GameObject ball, ballBounce, ballCurve, ballWater;
 
@@ -17,9 +18,12 @@ public class GameManager : MonoBehaviour {
     float[][] ballSpawns;
     int nextBallSpawn;
     int ballsInCourt1, ballsInCourt2;
-
-    ScoreboardManager scoreboardManager;
-    PlayerManager playerManager1, playerManager2;
+    
+    [HideInInspector]
+    public bool warmupLive, gameLive;
+    public ScoreboardManager scoreboardManager;
+    public SpotlightManager spotLightManager;
+    public PlayerManager playerManager1, playerManager2;
 
     // Use this for initialization
     void Start () {
@@ -28,20 +32,29 @@ public class GameManager : MonoBehaviour {
         ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
         ballSpawns = new float[][] { new float[] { 0, -1.78f, 1.78f }, new float[] { -1.5f, 0, -3f, 1.5f, -4.5f } };
         nextBallSpawn = 0;
+        warmupLive = false;
+        gameLive = false;
 
         scoreboardManager = scoreBoard.GetComponent<ScoreboardManager>();
+        spotLightManager = spotLight.GetComponent<SpotlightManager>();
         playerManager1 = player1.GetComponent<PlayerManager>();
         playerManager2 = player2.GetComponent<PlayerManager>();
 
         GenerateBallsToSpawn(0, 0);
-        Invoke("StartRound", 0.1f); // needs a delay, to make sure that players are initialized
+        playerManager1.SetBoundaries(team0Boundaries);
+        playerManager2.SetBoundaries(team0Boundaries);
+        Invoke("StartWarmup", 0.1f); // needs a delay, to make sure that players are initialized
+        //Invoke("StartGame", 10f); // needs a delay, to make sure that players are initialized
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        CheckHogg();
+        if (gameLive) {
+            CheckHogg();
+        }
     }
 
+    // Generate ballsToSpawn for the next round
     public void GenerateBallsToSpawn(int loserID, int hitsLeft) {
         // spawn one ball on the losing side, for every life the winner had left
         for (int i = 0; i < hitsLeft; i++) {
@@ -60,19 +73,44 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void EndRound() {
-        playerManager1.roundLive = false;
-        playerManager2.roundLive = false;
-        Invoke("StartRound", resetDelay);
-    }
-
-    public void EndCountDown() {
-        playerManager1.roundLive = true;
-        playerManager2.roundLive = true;
+    // End countdown, start round
+    public void StartRound() {
         playerManager1.countdownLive = false;
         playerManager2.countdownLive = false;
     }
 
+    // End round, start reset after delay
+    public void EndRound() {
+        playerManager1.roundLive = false;
+        playerManager2.roundLive = false;
+        Invoke("ResetRound", resetDelay);
+    }
+
+    public void EndWarmup() {
+        warmupLive = false;
+        StartGame();
+    }
+
+    void StartGame() {
+        scoreboardManager.TurnOn();
+        ResetRound();
+    }
+
+    void StartWarmup() {
+        warmupLive = true;
+    }
+
+    // Reset round
+    void ResetRound() {
+        nextBallSpawn = 0;
+        DeleteBalls();
+        SpawnBalls();
+        playerManager1.ResetRound();
+        playerManager2.ResetRound();
+        scoreboardManager.ResetRound();
+    }
+
+    // Spawn all balls from ballsToSpawn
     void SpawnBalls() {
         // middle balls
         nextBallSpawn = 0;
@@ -99,6 +137,7 @@ public class GameManager : MonoBehaviour {
         ballsToSpawn[2].Clear();
     }
 
+    // Create an individual ball
     void CreateBall(int ballTypeIndex, int xPosition) {
         if (ballTypeIndex == ballTypes.Length) {
             ballTypeIndex = (int)Random.Range(1, ballTypes.Length - 0.01f);
@@ -107,6 +146,7 @@ public class GameManager : MonoBehaviour {
         balls.Add(Instantiate(ballType, new Vector3(ballSpawns[0][xPosition], ballSpawns[1][nextBallSpawn], 0), Quaternion.Euler(0, 0, 0)));
     }
 
+    // Delete all balls stored in balls
     void DeleteBalls() {
         for (int i = balls.Count - 1; i >= 0; i--) {
             var ball = balls.ElementAt(i);
@@ -115,6 +155,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    // Check if either team is hogging all the balls
     void CheckHogg() {
         int ballsInCourt1 = 0;
         int ballsInCourt2 = 0;
@@ -146,17 +187,4 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void StartRound () {
-        nextBallSpawn = 0;
-        DeleteBalls();
-        SpawnBalls();
-        playerManager1.StartRound();
-        playerManager2.StartRound();
-        scoreboardManager.StartRound();
-    }
-
-    public void EndCountdown() {
-        playerManager1.countdownLive = false;
-        playerManager2.countdownLive = false;
-    }
 }

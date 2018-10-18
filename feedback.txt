@@ -45,6 +45,11 @@ Dodgen zag er te makkelijk uit
 Dodgen was te makkelijk
 
 
+BUGS
+Bounceballs sometimes lose velocity randomly
+You could get 2 points in 1 round if they get hit 3 times and hogg then.
+
+
 ---------------------------------------------------------
 Playtest sessie 2:
 - Was de feedbackloop duidelijk?
@@ -63,3 +68,8 @@ De game in 1 stijl houden
 Special rounds, textthings, dash
 Main menu achtig iets (licht gaat aan, en je hoort muziek in de background, je kunt gewoon rondlopen, controls staan op de grond gepaste, en scoreboard staat uit, je kunt starten door allebij 'fire' ingedrukt te houden voor een while)
 Speedball (steeds sneller), Portalball (gaat door muren), Waterball (explodeert, doet damage), Lijmball (explodeert, creeert AOE slow), Splitball (split op middenlijn), Clusterball (clustert on collision?).
+
+Titlescreen is same screen. Press space/RT to join. Door opens at the bottom (sound and light), player enters, light goes on (sound and light), titlescreen image disappears, instructions on floor appear.
+Second player is not in yet. Press space/RT to join. Door opens at the bottom (sound), player enters.
+Both players can throw balls in warmup, and need to hold fire for a couple seconds to start. Music plays in warmup.
+When a round should reset, light turns off (fading out the players and the balls), lights turn on (fading in the players and the balls)

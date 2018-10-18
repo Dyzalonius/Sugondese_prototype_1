@@ -5,52 +5,80 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour {
     
-    [SerializeField] GameObject player;
-    [SerializeField] GameObject crosshair;
-    [SerializeField] CanvasGroup spotlight, scoreboard;
-    [SerializeField] string throwInput, moveHorizontalInput, moveVerticalInput, aimHorizontalInput, aimVerticalInput;
-    public float minX, maxX, minY, maxY, maxSpeed;
-    float speed;
-    [SerializeField] int teamID;
+    public GameObject player, crosshair;
+    public GameObject arena;
+    public string inputType;
+    public float maxSpeed;
+    public int teamID;
 
-    Rigidbody2D rb;
-    Vector3 aimDirection;
-    List<GameObject> balls;
+    [HideInInspector]
+    public bool countdownLive, roundLive;
+    
     bool throwing;
+    List<Ball> balls;
+    float speed, minX, maxX, minY, maxY;
+    Vector3 spawnPosition, aimDirection;
     Vector3[] ballPositions = new Vector3[] { new Vector3(0,0,0), new Vector3(-0.1f,-0.1f,0), new Vector3(0.1f,-0.1f,0) };
-    Vector3 spawnPosition;
-    public bool roundLive, countdownLive;
+    Rigidbody2D rb;
+    GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {
-        balls = new List<GameObject>();
-        rb = GetComponent<Rigidbody2D>();
-        spawnPosition = transform.position;
-        aimDirection = new Vector3(0, 1, 0);
-        roundLive = true;
         countdownLive = false;
+        roundLive = true;
+        throwing = false;
+        balls = new List<Ball>();
         speed = maxSpeed;
+        spawnPosition = gameObject.transform.position;
+        aimDirection = new Vector3(0, 1, 0);
+
+        rb = GetComponent<Rigidbody2D>();
+        gameManager = arena.GetComponent<GameManager>();
+        
+        if (inputType != "") {
+            inputType = "_" + inputType;
+        }
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         Move();
         UpdateCrosshair();
+        HandleFire();
+    }
+    
+    public void SetBoundaries(float[] newBoundaries) {
+        minX = newBoundaries[0];
+        maxX = newBoundaries[1];
+        minY = newBoundaries[2];
+        maxY = newBoundaries[3];
+    }
 
-        if (Input.GetAxis(throwInput) > 0) {
+    void HandleFire() {
+        if (Input.GetAxis("Fire" + inputType) > 0) {
             if (!throwing && roundLive) {
                 Throw();
             }
             throwing = true;
-        } else {
+
+            // handle fire during warmup
+            if (gameManager.warmupLive) {
+                gameManager.scoreboardManager.ReadyingUp(teamID);
+            }
+        }
+        else {
             throwing = false;
+
+            if (gameManager.warmupLive) {
+                gameManager.scoreboardManager.ReadyingUpCancel(teamID);
+            }
         }
     }
 
     // Player movement
     void Move() {
         Vector3 currentPos = rb.position;
-        Vector3 direction = new Vector3(Input.GetAxis(moveHorizontalInput), Input.GetAxis(moveVerticalInput), 0);
+        Vector3 direction = new Vector3(Input.GetAxis("MoveHorizontal"+inputType), Input.GetAxis("MoveVertical"+inputType), 0);
         direction.Normalize();
         direction *= Time.fixedDeltaTime * Time.timeScale * speed;
 
@@ -67,7 +95,7 @@ public class PlayerManager : MonoBehaviour {
 
     // Update crosshair
     void UpdateCrosshair() {
-        Vector3 newRotation = Vector3.right * Input.GetAxis(aimHorizontalInput) + Vector3.up * Input.GetAxis(aimVerticalInput);
+        Vector3 newRotation = Vector3.right * Input.GetAxis("AimHorizontal"+inputType) + Vector3.up * Input.GetAxis("AimVertical"+inputType);
 
         // only update if atleast one of the two axes is being used
         if (newRotation.sqrMagnitude > 0.0f) {
@@ -80,17 +108,19 @@ public class PlayerManager : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         switch (other.gameObject.tag) {
             case "ball":
+                Ball ball = other.gameObject.GetComponent<Ball>();
+
                 // Pickup ball
-                if (other.gameObject.GetComponent<Ball>().onGround && balls.Count < 3) {
-                    Pickup(other.gameObject);
+                if (ball.onGround && balls.Count < 3) {
+                    Pickup(ball);
                 }
 
                 // Get hit
-                if (other.gameObject.GetComponent<Ball>().flying) {
-                    other.gameObject.GetComponent<Ball>().OnBounce(transform.position);
+                if (ball.flying) {
+                    ball.OnBounce(transform.position);
 
                     if (roundLive) {
-                        spotlight.GetComponent<SpotlightManager>().SetTarget(gameObject);
+                        gameManager.spotLightManager.SetTarget(gameObject);
                         PlayerHit();
                     }
                 }
@@ -102,21 +132,20 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    void OnTriggerExit2D(Collider2D other) {
         switch (other.gameObject.tag) {
             case "water":
                 speed = maxSpeed;
                 break;
-
         }
     }
 
     void PlayerHit() {
-        scoreboard.GetComponent<ScoreboardManager>().RemoveLife(teamID);
+        gameManager.scoreboardManager.AddHit(teamID);
     }
 
     // Pickup ball
-    void Pickup(GameObject ball) {
+    void Pickup(Ball ball) {
         ball.transform.parent = player.transform;
         balls.Add(ball);
         ball.GetComponent<Ball>().Pickup();
@@ -126,7 +155,7 @@ public class PlayerManager : MonoBehaviour {
     // Sort balls
     void SortBalls() {
         for (int i = 0; i < balls.Count; i++) {
-            balls[i].transform.localPosition = ballPositions[i];
+            balls[i].gameObject.transform.localPosition = ballPositions[i];
         }
     }
 
@@ -135,13 +164,13 @@ public class PlayerManager : MonoBehaviour {
         if (balls.Count > 0) {
             var ball = balls[0];
             balls.RemoveAt(0);
-            ball.transform.parent = null;
-            ball.GetComponent<Ball>().Fire(aimDirection);
+            ball.gameObject.transform.parent = null;
+            ball.Fire(aimDirection);
             SortBalls();
         }
     }
 
-    public void StartRound() {
+    public void ResetRound() {
         roundLive = true;
         countdownLive = true;
         balls.Clear();
