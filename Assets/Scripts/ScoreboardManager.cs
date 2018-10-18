@@ -9,7 +9,7 @@ public class ScoreboardManager : MonoBehaviour {
     public int scoreToWin, hitsMax, countdownTimerMax;
     public float maxCourtTimer, timeToReadyUp, readyUpDeadzone;
     public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText1, countdownText2;
-    public GameObject readyBlock1, readyBlock2, arena;
+    public GameObject readyGroup1, readyGroup2, readyBlock1, readyBlock2, arena;
     public CanvasGroup spotlight;
 
     int score1, score2, hits1, hits2;
@@ -31,9 +31,39 @@ public class ScoreboardManager : MonoBehaviour {
 
         gameManager = arena.GetComponent<GameManager>();
 
-        TurnOff();
+        StartWarmup();
         ReadyingUpCancel(1);
         ReadyingUpCancel(2);
+    }
+
+    void FixedUpdate() {
+        if (gameManager.warmupLive) {
+            float movementFloat1 = Mathf.Sin(Time.fixedTime);
+            float movementFloat2 = Mathf.Sin(Time.fixedTime + 1);
+
+            readyGroup1.transform.Rotate(0, 0, movementFloat1 * 5f);
+            readyGroup1.transform.position += new Vector3(0, movementFloat1 / 2f, 0);
+            readyGroup2.transform.Rotate(0, 0, movementFloat2 * 5f);
+            readyGroup2.transform.position += new Vector3(0, movementFloat2 / 2f, 0);
+        }
+    }
+
+    public void TurnOn() {
+        hits1Text.color = Color.gray;
+        hits2Text.color = Color.gray;
+        score1Text.color = Color.white;
+        score2Text.color = Color.white;
+        time1Text.color = Color.gray;
+        time2Text.color = Color.gray;
+    }
+
+    public void TurnOff() {
+        hits1Text.color = Color.clear;
+        hits2Text.color = Color.clear;
+        score1Text.color = Color.clear;
+        score2Text.color = Color.clear;
+        time1Text.color = Color.clear;
+        time2Text.color = Color.clear;
     }
 
     public void Hogg(int teamID) {
@@ -111,54 +141,6 @@ public class ScoreboardManager : MonoBehaviour {
         }
     }
 
-    public void AddHit(int teamID) {
-        switch (teamID) {
-            case 1:
-                hits2++;
-                UpdateText();
-
-                if (hits2 == hitsMax) {
-                    AddScore(2);
-                }
-                break;
-            case 2:
-                hits1++;
-                UpdateText();
-
-                if (hits1 == hitsMax) {
-                    AddScore(1);
-                }
-                break;
-        }
-    }
-
-    public void TurnOn() {
-        hits1Text.color = Color.gray;
-        hits2Text.color = Color.gray;
-        score1Text.color = Color.white;
-        score2Text.color = Color.white;
-        time1Text.color = Color.gray;
-        time2Text.color = Color.gray;
-    }
-
-    public void TurnOff() {
-        hits1Text.color = Color.clear;
-        hits2Text.color = Color.clear;
-        score1Text.color = Color.clear;
-        score2Text.color = Color.clear;
-        time1Text.color = Color.clear;
-        time2Text.color = Color.clear;
-    }
-
-    public void ResetRound() {
-        hits1 = 0;
-        hits2 = 0;
-        courtTimer1 = maxCourtTimer;
-        courtTimer2 = maxCourtTimer;
-        UpdateText();
-        Countdown();
-    }
-
     public void ReadyingUp(int teamID) {
         switch (teamID) {
             case 1:
@@ -193,6 +175,48 @@ public class ScoreboardManager : MonoBehaviour {
             case 2:
                 ready2 = 0;
                 readyBlock2.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0.4f);
+                break;
+        }
+    }
+
+    public void StartGame() {
+        readyGroup1.SetActive(false);
+        readyGroup2.SetActive(false);
+        TurnOn();
+    }
+
+    public void StartWarmup() {
+        readyGroup1.SetActive(true);
+        readyGroup2.SetActive(true);
+        TurnOff();
+    }
+
+    public void ResetRound() {
+        hits1 = 0;
+        hits2 = 0;
+        courtTimer1 = maxCourtTimer;
+        courtTimer2 = maxCourtTimer;
+        UpdateText();
+        Countdown();
+    }
+
+    public void AddHit(int teamID) {
+        switch (teamID) {
+            case 1:
+                hits2++;
+                UpdateText();
+
+                if (hits2 == hitsMax) {
+                    AddScore(2);
+                }
+                break;
+            case 2:
+                hits1++;
+                UpdateText();
+
+                if (hits1 == hitsMax) {
+                    AddScore(1);
+                }
                 break;
         }
     }

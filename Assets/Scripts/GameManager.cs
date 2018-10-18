@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void StartGame() {
-        scoreboardManager.TurnOn();
+        scoreboardManager.StartGame();
         ResetRound();
     }
 

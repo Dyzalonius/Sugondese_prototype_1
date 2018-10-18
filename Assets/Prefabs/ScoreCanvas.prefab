@@ -1037,6 +1037,8 @@ MonoBehaviour:
   time2Text: {fileID: 114683718230303702}
   countdownText1: {fileID: 114416391804558746}
   countdownText2: {fileID: 114599986274726444}
+  readyGroup1: {fileID: 1800719839954792}
+  readyGroup2: {fileID: 1530681662704898}
   readyBlock1: {fileID: 1614089667160044}
   readyBlock2: {fileID: 1656982201500182}
   arena: {fileID: 0}
