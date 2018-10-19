@@ -155,8 +155,8 @@ public class ScoreboardManager : MonoBehaviour {
                 break;
         }
 
-        //if (ready1 >= 1f && ready2 >= 1f) {
-        if (ready1 >= 1f) { // SWITCH THIS TO TEST MULTIPLAYER
+        if (ready1 >= 1f && ready2 >= 1f) {
+        //if (ready1 >= 1f) { // SWITCH THIS TO TEST MULTIPLAYER
             gameManager.EndWarmup();
         }
     }
