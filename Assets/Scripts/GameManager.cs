@@ -19,11 +19,10 @@ public class GameManager : MonoBehaviour {
     int nextBallSpawn;
     int ballsInCourt1, ballsInCourt2;
     
-    [HideInInspector]
-    public bool warmupLive, gameLive;
-    public ScoreboardManager scoreboardManager;
-    public SpotlightManager spotLightManager;
-    public PlayerManager playerManager1, playerManager2;
+    [HideInInspector] public bool warmupLive, gameLive;
+    [HideInInspector] public ScoreboardManager scoreboardManager;
+    [HideInInspector] public SpotlightManager spotLightManager;
+    [HideInInspector] public PlayerManager playerManager1, playerManager2;
 
     // Use this for initialization
     void Start () {
