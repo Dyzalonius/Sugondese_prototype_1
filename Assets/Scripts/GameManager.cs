@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
     public int minBallCountMid, minBallCountTotal;
     public float resetDelay;
     public float[] team0Boundaries, team1Boundaries, team2Boundaries;
-    public CanvasGroup scoreBoard, spotLight;
+    public CanvasGroup scoreBoard, spotLight, fader;
     public GameObject player1, player2;
     public GameObject ball, ballBounce, ballCurve, ballWater;
 
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public bool warmupLive, gameLive;
     [HideInInspector] public ScoreboardManager scoreboardManager;
     [HideInInspector] public SpotlightManager spotLightManager;
+    [HideInInspector] public FadeManager fadeManager;
     [HideInInspector] public PlayerManager playerManager1, playerManager2;
 
     // Use this for initialization
@@ -34,12 +35,14 @@ public class GameManager : MonoBehaviour {
         warmupLive = false;
         gameLive = false;
 
+        fadeManager = fader.GetComponent<FadeManager>();
         scoreboardManager = scoreBoard.GetComponent<ScoreboardManager>();
         spotLightManager = spotLight.GetComponent<SpotlightManager>();
         playerManager1 = player1.GetComponent<PlayerManager>();
         playerManager2 = player2.GetComponent<PlayerManager>();
 
         GenerateBallsToSpawn(0, 0);
+        FillFadeManagerObjects();
         playerManager1.SetBoundaries(team1Boundaries);
         playerManager2.SetBoundaries(team2Boundaries);
         Invoke("StartWarmup", 0.1f); // needs a delay, to make sure that players are initialized
@@ -82,12 +85,31 @@ public class GameManager : MonoBehaviour {
     public void EndRound() {
         playerManager1.roundLive = false;
         playerManager2.roundLive = false;
-        Invoke("ResetRound", resetDelay);
+        Invoke("DelayReset", resetDelay);
+    }
+
+    void DelayReset() {
+        fadeManager.active = true;
+        Invoke("StartGame", fadeManager.fadeInSpeed + fadeManager.fadeOutDelay);
     }
 
     public void EndWarmup() {
         warmupLive = false;
-        StartGame();
+        fadeManager.active = true;
+        Invoke("StartGame", fadeManager.fadeInSpeed + fadeManager.fadeOutDelay);
+    }
+
+    void FillFadeManagerObjects() {
+        fadeManager.objectsToFade.Add(player1);
+        fadeManager.objectsToFade.Add(player2);
+        fadeManager.objectsToFade.Add(playerManager1.crosshair);
+        fadeManager.objectsToFade.Add(playerManager2.crosshair);
+        fadeManager.objectsToFade.Add(scoreboardManager.tutorial1.transform.GetChild(0).gameObject);
+        fadeManager.objectsToFade.Add(scoreboardManager.tutorial2.transform.GetChild(0).gameObject);
+        fadeManager.canvasGroupsToFade.Add(scoreboardManager.tutorial1.GetComponent<CanvasGroup>());
+        fadeManager.canvasGroupsToFade.Add(scoreboardManager.tutorial2.GetComponent<CanvasGroup>());
+        fadeManager.canvasGroupsToFade.Add(scoreboardManager.readyGroup1.GetComponent<CanvasGroup>());
+        fadeManager.canvasGroupsToFade.Add(scoreboardManager.readyGroup2.GetComponent<CanvasGroup>());
     }
 
     void StartGame() {
