@@ -13,7 +13,8 @@ public class MessageManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 messagePos = Camera.main.WorldToScreenPoint(this.transform.position);
+        Vector3 messagePos = Camera.main.WorldToScreenPoint(transform.position);
         messageBox.transform.position = messagePos;
+        Debug.Log(messageBox.transform.position);
 	}
 }

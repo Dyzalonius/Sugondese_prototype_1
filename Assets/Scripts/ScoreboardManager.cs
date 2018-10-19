@@ -166,8 +166,8 @@ public class ScoreboardManager : MonoBehaviour {
             case 1:
                 ready1 = 0;
                 readyBlock1.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0.4f);
-
                 break;
+
             case 2:
                 ready2 = 0;
                 readyBlock2.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0.4f);

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4073502965563488}
   - component: {fileID: 225221457868709168}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4277336463242036}
   - component: {fileID: 212950698727084640}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Textbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 224257669091634086}
   - component: {fileID: 222281033378162518}
   - component: {fileID: 114165819921618142}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ Transform:
   m_GameObject: {fileID: 1051655304991616}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children:
   - {fileID: 4277336463242036}
   - {fileID: 224257669091634086}
