@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -137,7 +136,7 @@ public class GameManager : MonoBehaviour {
         // middle balls
         nextBallSpawn = 0;
         for (int i = 0; i < ballsToSpawn[0].Count; i++) {
-            CreateBall(ballsToSpawn[0].ElementAt(i), 0);
+            CreateBall(ballsToSpawn[0][i], 0);
             nextBallSpawn++;
         }
         ballsToSpawn[0].Clear();
@@ -145,7 +144,7 @@ public class GameManager : MonoBehaviour {
         // player 1 balls
         nextBallSpawn = ballSpawns[1].Length - 1;
         for (int i = 0; i < ballsToSpawn[1].Count; i++) {
-            CreateBall(ballsToSpawn[1].ElementAt(i), 1);
+            CreateBall(ballsToSpawn[1][i], 1);
             nextBallSpawn--;
         }
         ballsToSpawn[1].Clear();
@@ -153,7 +152,7 @@ public class GameManager : MonoBehaviour {
         // player 2 balls
         nextBallSpawn = ballSpawns[1].Length - 1;
         for (int i = 0; i < ballsToSpawn[2].Count; i++) {
-            CreateBall(ballsToSpawn[2].ElementAt(i), 2);
+            CreateBall(ballsToSpawn[2][i], 2);
             nextBallSpawn--;
         }
         ballsToSpawn[2].Clear();
@@ -165,14 +164,18 @@ public class GameManager : MonoBehaviour {
             ballTypeIndex = (int)Random.Range(1, ballTypes.Length - 0.01f);
         }
         GameObject ballType = ballTypes[ballTypeIndex];
-        balls.Add(Instantiate(ballType, new Vector3(ballSpawns[0][xPosition], ballSpawns[1][nextBallSpawn], 0), Quaternion.Euler(0, 0, 0)));
+        GameObject ball = Instantiate(ballType, new Vector3(ballSpawns[0][xPosition], ballSpawns[1][nextBallSpawn], 0), Quaternion.Euler(0, 0, 0));
+        balls.Add(ball);
+        fadeManager.objectsToFade.Add(ball);
     }
 
     // Delete all balls stored in balls
     void DeleteBalls() {
         for (int i = balls.Count - 1; i >= 0; i--) {
-            var ball = balls.ElementAt(i);
-            balls.RemoveAt(i);
+            var ball = balls[i];
+            balls.Remove(ball);
+            fadeManager.objectsToFade.Remove(ball);
+
             Destroy(ball);
         }
     }
@@ -184,7 +187,7 @@ public class GameManager : MonoBehaviour {
 
         // check for every ball on which side of the court they are
         for (int i = 0; i < balls.Count; i++) {
-            float x = balls.ElementAt(i).transform.position.x;
+            float x = balls[i].transform.position.x;
 
             if (x <= 0) {
                 ballsInCourt1++;

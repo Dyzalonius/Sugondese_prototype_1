@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -470,12 +470,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9000cd3a8b39dc34d84067b9b4223a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeInSpeed: 0.5
-  fadeOutDelay: 1
-  fadeOutSpeed: 0.5
+  fadeInSpeed: 0.3
+  fadeOutDelay: 0.5
+  fadeOutSpeed: 0.3
   active: 0
   objectsToFade: []
-  textsToFade: []
+  canvasGroupsToFade: []
 --- !u!225 &209764930
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -609,7 +609,7 @@ Prefab:
     - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
         type: 2}
       propertyPath: inputType
-      value: STEAM
+      value: XBOX
       objectReference: {fileID: 0}
     - target: {fileID: 114444755475079044, guid: 10e1edf1bc8c17d4991a18fe6bf3645c,
         type: 2}

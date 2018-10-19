@@ -16,7 +16,7 @@ public class FadeManager : MonoBehaviour {
     [HideInInspector] public List<CanvasGroup> canvasGroupsToFade;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         canvasGroup = GetComponent<CanvasGroup>();
         objectsToFade = new List<GameObject>();
         canvasGroupsToFade = new List<CanvasGroup>();
@@ -29,7 +29,7 @@ public class FadeManager : MonoBehaviour {
         if (active) {
             HandleFade();
         }
-	}
+    }
 
     void HandleFade() {
         switch (state) {

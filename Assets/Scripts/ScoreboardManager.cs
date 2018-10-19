@@ -37,10 +37,10 @@ public class ScoreboardManager : MonoBehaviour {
 
     void FixedUpdate() {
         if (gameManager.warmupLive) {
-            float movementFloat1 = Mathf.Sin(Time.fixedTime * 2);
-            float movementFloat2 = Mathf.Sin(Time.fixedTime * 2 + 1);
-            readyGroup1.transform.position += new Vector3(0, movementFloat1 * 0.002f, 0);
-            readyGroup2.transform.position += new Vector3(0, movementFloat2 * 0.002f, 0);
+            float movementFloat1 = Mathf.Sin(Time.fixedTime * 3);
+            float movementFloat2 = Mathf.Sin(Time.fixedTime * 3 - 1.5f);
+            readyGroup1.transform.position += new Vector3(0, movementFloat1 * 0.007f, 0);
+            readyGroup2.transform.position += new Vector3(0, movementFloat2 * 0.007f, 0);
         }
     }
 
@@ -155,8 +155,8 @@ public class ScoreboardManager : MonoBehaviour {
                 break;
         }
 
-        if (ready1 >= 1f && ready2 >= 1f) {
-        //if (ready1 >= 1f) { // SWITCH THIS TO TEST MULTIPLAYER
+        //if (ready1 >= 1f && ready2 >= 1f) { //Multiplayer
+        if (ready1 >= 1f) { //Singleplayer
             gameManager.EndWarmup();
         }
     }
