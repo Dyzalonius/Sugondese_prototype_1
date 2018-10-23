@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public PlayerManager playerManager1, playerManager2;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         balls = new List<GameObject>();
         ballTypes = new GameObject[] { ball, ballBounce, ballCurve, ballWater };
         ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour {
         FillLightManagerObjects();
         playerManager1.SetBoundaries(team1Boundaries);
         playerManager2.SetBoundaries(team2Boundaries);
-        Invoke("StartTitleScreen", 0.1f); // needs a delay, to make sure that players are initialized
+
+        StartTitleScreen();
     }
 	
 	// Update is called once per frame
