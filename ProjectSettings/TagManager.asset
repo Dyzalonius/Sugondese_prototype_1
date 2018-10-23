@@ -63,3 +63,6 @@ TagManager:
   - name: Spotlight
     uniqueID: 3042892183
     locked: 0
+  - name: TitleScreen
+    uniqueID: 1403368865
+    locked: 0

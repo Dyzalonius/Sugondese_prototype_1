@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
     public int minBallCountMid, minBallCountTotal;
     public float resetDelay;
     public float[] team0Boundaries, team1Boundaries, team2Boundaries;
-    public CanvasGroup scoreBoard, spotLight, fader;
+    public CanvasGroup scoreBoard, spotLight, lights, titleScreen;
     public GameObject player1, player2;
     public GameObject ball, ballBounce, ballCurve, ballWater;
 
@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour {
     int nextBallSpawn;
     int ballsInCourt1, ballsInCourt2;
     
-    [HideInInspector] public bool warmupLive, gameLive;
+    [HideInInspector] public bool titleScreenLive, warmupLive, gameLive;
     [HideInInspector] public ScoreboardManager scoreboardManager;
     [HideInInspector] public SpotlightManager spotLightManager;
-    [HideInInspector] public FadeManager fadeManager;
+    [HideInInspector] public LightManager lightManager;
+    [HideInInspector] public TitleScreenManager titleScreenManager;
     [HideInInspector] public PlayerManager playerManager1, playerManager2;
 
     // Use this for initialization
@@ -31,21 +32,22 @@ public class GameManager : MonoBehaviour {
         ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
         ballSpawns = new float[][] { new float[] { 0, -1.78f, 1.78f }, new float[] { -1.5f, 0, -3f, 1.5f, -4.5f } };
         nextBallSpawn = 0;
+        titleScreenLive = false;
         warmupLive = false;
         gameLive = false;
 
-        fadeManager = fader.GetComponent<FadeManager>();
+        lightManager = lights.GetComponent<LightManager>();
         scoreboardManager = scoreBoard.GetComponent<ScoreboardManager>();
         spotLightManager = spotLight.GetComponent<SpotlightManager>();
+        titleScreenManager = titleScreen.GetComponent<TitleScreenManager>();
         playerManager1 = player1.GetComponent<PlayerManager>();
         playerManager2 = player2.GetComponent<PlayerManager>();
 
         GenerateBallsToSpawn(0, 0);
-        FillFadeManagerObjects();
+        FillLightManagerObjects();
         playerManager1.SetBoundaries(team1Boundaries);
         playerManager2.SetBoundaries(team2Boundaries);
-        Invoke("StartWarmup", 0.1f); // needs a delay, to make sure that players are initialized
-        //Invoke("StartGame", 10f); // needs a delay, to make sure that players are initialized
+        Invoke("StartTitleScreen", 0.1f); // needs a delay, to make sure that players are initialized
     }
 	
 	// Update is called once per frame
@@ -74,41 +76,24 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    // End countdown, start round
-    public void StartRound() {
-        playerManager1.countdownLive = false;
-        playerManager2.countdownLive = false;
+    void StartTitleScreen() {
+        lightManager.titleScreenFade = true;
+        titleScreenLive = true;
     }
 
-    // End round, start reset after delay
-    public void EndRound() {
-        playerManager1.roundLive = false;
-        playerManager2.roundLive = false;
-        Invoke("DelayReset", resetDelay);
+    public void EndTitleScreen() {
+        lightManager.EndFadeTitleScreen();
+        StartWarmup();
     }
 
-    void DelayReset() {
-        fadeManager.active = true;
-        Invoke("StartGame", fadeManager.fadeInSpeed + fadeManager.fadeOutDelay);
+    void StartWarmup() {
+        warmupLive = true;
     }
 
     public void EndWarmup() {
         warmupLive = false;
-        fadeManager.active = true;
-        Invoke("StartGame", fadeManager.fadeInSpeed + fadeManager.fadeOutDelay);
-    }
-
-    void FillFadeManagerObjects() {
-        fadeManager.objectsToFade.Add(player1);
-        fadeManager.objectsToFade.Add(player2);
-        fadeManager.objectsToFade.Add(playerManager1.crosshair);
-        fadeManager.objectsToFade.Add(playerManager2.crosshair);
-        fadeManager.objectsToFade.Add(scoreboardManager.tutorial1.transform.GetChild(0).gameObject);
-        fadeManager.objectsToFade.Add(scoreboardManager.tutorial2.transform.GetChild(0).gameObject);
-        fadeManager.canvasGroupsToFade.Add(scoreboardManager.tutorial1.GetComponent<CanvasGroup>());
-        fadeManager.canvasGroupsToFade.Add(scoreboardManager.tutorial2.GetComponent<CanvasGroup>());
-        fadeManager.canvasGroupsToFade.Add(scoreboardManager.readyGroup1.GetComponent<CanvasGroup>());
-        fadeManager.canvasGroupsToFade.Add(scoreboardManager.readyGroup2.GetComponent<CanvasGroup>());
+        lightManager.roundEndFade = true;
+        Invoke("StartGame", lightManager.fadeInSpeed + lightManager.fadeOutDelay);
     }
 
     void StartGame() {
@@ -117,11 +102,7 @@ public class GameManager : MonoBehaviour {
         ResetRound();
     }
 
-    void StartWarmup() {
-        warmupLive = true;
-    }
-
-    // Reset round
+    // Reset round, start countdown
     void ResetRound() {
         nextBallSpawn = 0;
         DeleteBalls();
@@ -129,6 +110,38 @@ public class GameManager : MonoBehaviour {
         playerManager1.ResetRound();
         playerManager2.ResetRound();
         scoreboardManager.ResetRound();
+    }
+
+    // End countdown, start round
+    public void StartRound() {
+        playerManager1.countdownLive = false;
+        playerManager2.countdownLive = false;
+    }
+
+    // End round, start delay
+    public void EndRound() {
+        playerManager1.roundLive = false;
+        playerManager2.roundLive = false;
+        Invoke("DelayReset", resetDelay);
+    }
+
+    // End delay, start game
+    void DelayReset() {
+        lightManager.roundEndFade = true;
+        Invoke("StartGame", lightManager.fadeInSpeed + lightManager.fadeOutDelay);
+    }
+
+    void FillLightManagerObjects() {
+        lightManager.objectsToFade.Add(player1);
+        lightManager.objectsToFade.Add(player2);
+        lightManager.objectsToFade.Add(playerManager1.crosshair);
+        lightManager.objectsToFade.Add(playerManager2.crosshair);
+        lightManager.objectsToFade.Add(scoreboardManager.tutorial1.transform.GetChild(0).gameObject);
+        lightManager.objectsToFade.Add(scoreboardManager.tutorial2.transform.GetChild(0).gameObject);
+        lightManager.canvasGroupsToFade.Add(scoreboardManager.tutorial1.GetComponent<CanvasGroup>());
+        lightManager.canvasGroupsToFade.Add(scoreboardManager.tutorial2.GetComponent<CanvasGroup>());
+        lightManager.canvasGroupsToFade.Add(scoreboardManager.readyGroup1.GetComponent<CanvasGroup>());
+        lightManager.canvasGroupsToFade.Add(scoreboardManager.readyGroup2.GetComponent<CanvasGroup>());
     }
 
     // Spawn all balls from ballsToSpawn
@@ -166,7 +179,7 @@ public class GameManager : MonoBehaviour {
         GameObject ballType = ballTypes[ballTypeIndex];
         GameObject ball = Instantiate(ballType, new Vector3(ballSpawns[0][xPosition], ballSpawns[1][nextBallSpawn], 0), Quaternion.Euler(0, 0, 0));
         balls.Add(ball);
-        fadeManager.objectsToFade.Add(ball);
+        lightManager.objectsToFade.Add(ball);
     }
 
     // Delete all balls stored in balls
@@ -174,7 +187,7 @@ public class GameManager : MonoBehaviour {
         for (int i = balls.Count - 1; i >= 0; i--) {
             var ball = balls[i];
             balls.Remove(ball);
-            fadeManager.objectsToFade.Remove(ball);
+            lightManager.objectsToFade.Remove(ball);
 
             Destroy(ball);
         }

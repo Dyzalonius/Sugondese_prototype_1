@@ -197,7 +197,7 @@ public class ScoreboardManager : MonoBehaviour {
         courtTimer1 = maxCourtTimer;
         courtTimer2 = maxCourtTimer;
         UpdateText();
-        Invoke("Countdown", gameManager.fadeManager.fadeOutDelay);
+        Invoke("Countdown", gameManager.lightManager.fadeOutDelay);
     }
 
     public void AddHit(int teamID) {
