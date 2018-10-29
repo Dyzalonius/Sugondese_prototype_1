@@ -67,3 +67,6 @@ TagManager:
   - name: TitleScreen
     uniqueID: 1403368865
     locked: 0
+  - name: Vampires
+    uniqueID: 3751604165
+    locked: 0
