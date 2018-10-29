@@ -6,16 +6,8 @@ using UnityEngine;
 public class BallElectricity : Ball {
 
     public GameObject electricityParticlePrefab;
-    
+
     GameObject electricityParticle;
-
-    protected override void Start() {
-        base.Start();
-    }
-
-    protected override void Move() {
-        base.Move();
-    }
 
     protected override void OnBounce() {
         if (!dying) {

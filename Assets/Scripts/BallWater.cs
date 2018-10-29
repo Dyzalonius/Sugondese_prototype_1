@@ -56,6 +56,16 @@ public class BallWater : BallBounce {
                 waterParticles[i].GetComponent<WaterEffect>().Electrocute();
             }
         }
+        Invoke("ElectrocuteStop", 0.5f);
+    }
+
+    void ElectrocuteStop() {
+        isElectrocuted = false;
+        for (int i = waterParticles.Count - 1; i >= 0; i--) {
+            if (waterParticles[i] != null) {
+                waterParticles[i].GetComponent<WaterEffect>().ElectrocuteStop();
+            }
+        }
     }
 
     public void OnDestroy() {

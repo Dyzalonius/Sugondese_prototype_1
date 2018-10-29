@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour {
     
     public GameObject player, crosshair;
     public GameObject arena;
+    public GameObject statusObject;
     public string inputType;
     public float maxSpeed;
     public int teamID;
@@ -14,19 +15,21 @@ public class PlayerManager : MonoBehaviour {
     [HideInInspector]
     public bool countdownLive, roundLive;
     
-    bool throwing;
+    bool throwing, stunned;
     List<Ball> balls;
     float speed, minX, maxX, minY, maxY;
     Vector3 spawnPosition, aimDirection;
     Vector3[] ballPositions = new Vector3[] { new Vector3(0,0,0), new Vector3(-0.1f,-0.1f,0), new Vector3(0.1f,-0.1f,0) };
     Rigidbody2D rb;
     GameManager gameManager;
+    StatusManager statusManager;
 
 	// Use this for initialization
 	void Start () {
         countdownLive = false;
         roundLive = true;
         throwing = false;
+        stunned = false;
         balls = new List<Ball>();
         speed = maxSpeed;
         spawnPosition = gameObject.transform.position;
@@ -34,6 +37,7 @@ public class PlayerManager : MonoBehaviour {
 
         rb = GetComponent<Rigidbody2D>();
         gameManager = arena.GetComponent<GameManager>();
+        statusManager = statusObject.GetComponent<StatusManager>();
         
         if (inputType != "") {
             inputType = "_" + inputType;
@@ -45,6 +49,9 @@ public class PlayerManager : MonoBehaviour {
         Move();
         UpdateCrosshair();
         HandleFire();
+        if (stunned) {
+            CheckStun();
+        }
     }
     
     public void SetBoundaries(float[] newBoundaries) {
@@ -129,7 +136,9 @@ public class PlayerManager : MonoBehaviour {
             case "water":
                 WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
                 if (waterEffect.isElectrocuted) {
-                    Stun();
+                    if (!stunned) {
+                        Stun();
+                    }
                 }
                 else {
                     speed = maxSpeed * waterEffect.speedReductionFactor;
@@ -137,7 +146,9 @@ public class PlayerManager : MonoBehaviour {
                 break;
 
             case "electricity":
-                Stun();
+                if (!stunned) {
+                    Stun();
+                }
                 break;
         }
     }
@@ -145,17 +156,25 @@ public class PlayerManager : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other) {
         switch (other.gameObject.tag) {
             case "water":
-                speed = maxSpeed;
-                break;
-
-            case "electricity":
-                speed = maxSpeed;
+                if (!stunned) {
+                    speed = maxSpeed;
+                }
                 break;
         }
     }
 
     void Stun() {
         speed = 0f;
+        statusManager.Stun();
+        stunned = true;
+    }
+
+    void CheckStun() {
+        if (statusManager.stunned == false) {
+            // stop stun
+            stunned = false;
+            speed = maxSpeed;
+        }
     }
 
     void PlayerHit() {

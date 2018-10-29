@@ -5,17 +5,19 @@ using UnityEngine;
 public class WaterEffect : MonoBehaviour {
 
     public float timeToMaxScale, timeBeforeRemove, timeToRemove, speedReductionFactor, startScaleFactor;
-    public Sprite electrocutedWaterSprite;
+    public Sprite waterSpriteElectrocuted;
     float currentScaleFactor, currentTimeBeforeRemove, currentAlpha;
     Vector3 endScale;
     BallWater parent;
+    Sprite waterSprite;
     const float MAX_SCALE_FACTOR = 1f;
     const float MAX_ALPHA_FACTOR = 1f;
 
     [HideInInspector] public bool isElectrocuted;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+        waterSprite = GetComponent<SpriteRenderer>().sprite;
         currentScaleFactor = startScaleFactor;
         currentAlpha = MAX_ALPHA_FACTOR;
         endScale = transform.localScale;
@@ -76,6 +78,11 @@ public class WaterEffect : MonoBehaviour {
 
     public void Electrocute() {
         isElectrocuted = true;
-        gameObject.GetComponent<SpriteRenderer>().sprite = electrocutedWaterSprite;
+        GetComponent<SpriteRenderer>().sprite = waterSpriteElectrocuted;
+    }
+
+    public void ElectrocuteStop() {
+        isElectrocuted = false;
+        GetComponent<SpriteRenderer>().sprite = waterSprite;
     }
 }

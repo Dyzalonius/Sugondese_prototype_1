@@ -60,8 +60,9 @@ MonoBehaviour:
   timeToRemove: 1
   speedReductionFactor: 0.5
   startScaleFactor: 0.5
-  electrocutedWaterSprite: {fileID: 21300000, guid: 04d2a476fb7fa2c4b93e2bcc152fc80d,
+  waterSpriteElectrocuted: {fileID: 21300000, guid: 04d2a476fb7fa2c4b93e2bcc152fc80d,
     type: 3}
+  isElectrocuted: 0
 --- !u!212 &212532693077943708
 SpriteRenderer:
   m_ObjectHideFlags: 1

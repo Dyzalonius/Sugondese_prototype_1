@@ -9,13 +9,15 @@ public class ElectricityEffect : MonoBehaviour {
     Vector3 endScale;
     const float MAX_SCALE_FACTOR = 1f;
     const float MAX_ALPHA_FACTOR = 1f;
+    [HideInInspector] public bool shocking;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         currentScaleFactor = MAX_SCALE_FACTOR;
         currentAlpha = MAX_ALPHA_FACTOR;
         endScale = transform.localScale;
         UpdateScale();
+        shocking = true;
     }
 	
 	// Update is called once per frame
@@ -38,7 +40,6 @@ public class ElectricityEffect : MonoBehaviour {
 
     // Fade the particle out
     void FadeOut() {
-
         if (currentTimeBeforeRemove < timeBeforeRemove) {
             currentTimeBeforeRemove += Time.fixedDeltaTime * Time.timeScale;
         } else {
