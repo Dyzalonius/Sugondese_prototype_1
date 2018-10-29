@@ -12,7 +12,7 @@ public class ScoreboardManager : MonoBehaviour {
     public GameObject readyGroup1, readyGroup2, readyBlock1, readyBlock2, tutorial1, tutorial2, arena;
     public CanvasGroup spotlight;
 
-    int score1, score2, hits1, hits2;
+    [HideInInspector] public int score1, score2, hits1, hits2;
     int countdownTimer;
     float courtTimer1, courtTimer2, ready1, ready2;
     GameManager gameManager;
@@ -217,6 +217,19 @@ public class ScoreboardManager : MonoBehaviour {
                 if (hits1 == hitsMax) {
                     AddScore(1);
                 }
+                break;
+        }
+    }
+
+    public void RemoveHit(int teamID) {
+        switch (teamID) {
+            case 1:
+                hits2--;
+                UpdateText();
+                break;
+            case 2:
+                hits1--;
+                UpdateText();
                 break;
         }
     }

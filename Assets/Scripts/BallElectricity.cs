@@ -10,9 +10,7 @@ public class BallElectricity : Ball {
     GameObject electricityParticle;
 
     protected override void OnBounce() {
-        if (!dying) {
-            Explode();
-        }
+        Explode();
 
         base.OnBounce();
     }

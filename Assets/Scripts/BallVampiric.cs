@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class BallVampiric : Ball {
 
-    protected override void OnBounce() {
-        if (!dying) {
-            LifeSteal();
-        }
-
-        base.OnBounce();
+    protected override void Start() {
+        base.Start();
     }
 
-    void LifeSteal() {
-        // spawn thingy with a ghostly trail, moving to the hit player's hits, and removing 1
+    public override void OnBounce(PlayerManager playerManager) {
+        LifeSteal(playerManager);
+
+        base.OnBounce(playerManager);
+    }
+
+    void LifeSteal(PlayerManager playerManager) {
+        ScoreboardManager scoreboardManager = playerManager.gameManager.scoreboardManager;
+
+        if (playerManager.teamID == 1) {
+            if (scoreboardManager.hits2 > 0) {
+                scoreboardManager.RemoveHit(2);
+            }
+        }
+        else {
+            if (scoreboardManager.hits1 > 0) {
+                scoreboardManager.RemoveHit(1);
+            }
+        }
     }
 }

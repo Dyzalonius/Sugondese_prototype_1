@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour {
     Vector3 spawnPosition, aimDirection;
     Vector3[] ballPositions = new Vector3[] { new Vector3(0,0,0), new Vector3(-0.1f,-0.1f,0), new Vector3(0.1f,-0.1f,0) };
     Rigidbody2D rb;
-    GameManager gameManager;
+    [HideInInspector] public GameManager gameManager;
     StatusManager statusManager;
 
 	// Use this for initialization
@@ -124,7 +124,7 @@ public class PlayerManager : MonoBehaviour {
 
                 // Get hit
                 if (ball.flying) {
-                    ball.OnBounce(transform.position);
+                    ball.OnBounce(this);
 
                     if (roundLive) {
                         gameManager.spotLightManager.SetTarget(gameObject);

@@ -80,8 +80,8 @@ public class Ball : MonoBehaviour {
         Kill();
     }
 
-    public void OnBounce(Vector3 other) {
-        Collide(other);
+    public virtual void OnBounce(PlayerManager playerManager) {
+        Collide(playerManager.transform.position);
         OnBounce();
     }
 
