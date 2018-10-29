@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public CanvasGroup scoreBoard, spotLight, lights, titleScreen;
     public GameObject player1, player2;
     public GameObject ball, ballBounce, ballCurve, ballWater, ballElectricity, ballVampiric;
+    public AudioSource audioSourceTransition;
 
     List<GameObject> balls;
     GameObject[] ballTypes;
@@ -130,6 +131,7 @@ public class GameManager : MonoBehaviour {
 
     // End delay, start game
     void DelayReset() {
+        audioSourceTransition.Play();
         lightManager.roundEndFade = true;
         Invoke("StartGame", lightManager.fadeInSpeed + lightManager.fadeOutDelay);
     }

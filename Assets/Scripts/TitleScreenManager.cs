@@ -7,6 +7,7 @@ public class TitleScreenManager : MonoBehaviour {
     public CanvasGroup titleScreen, allowInputText;
     public GameObject arena;
     public float inputDelay;
+    [SerializeField] AudioSource audioSourceMusic;
 
     GameManager gameManager;
     bool allowInput;

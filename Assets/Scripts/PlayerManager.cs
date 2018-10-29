@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour {
     public GameObject player, crosshair;
     public GameObject arena;
     public GameObject statusObject;
+    public AudioSource audioSourceThrow;
     public string inputType;
     public float maxSpeed;
     public int teamID;
@@ -46,14 +47,17 @@ public class PlayerManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        Move();
         UpdateCrosshair();
         HandleFire();
         if (stunned) {
             CheckStun();
         }
     }
-    
+
+    void Update() {
+        Move();
+    }
+
     public void SetBoundaries(float[] newBoundaries) {
         minX = newBoundaries[0];
         maxX = newBoundaries[1];
@@ -87,7 +91,7 @@ public class PlayerManager : MonoBehaviour {
         Vector3 currentPos = rb.position;
         Vector3 direction = new Vector3(Input.GetAxis("MoveHorizontal"+inputType), Input.GetAxis("MoveVertical"+inputType), 0);
         direction.Normalize();
-        direction *= Time.fixedDeltaTime * Time.timeScale * speed;
+        direction *= Time.deltaTime * Time.timeScale * speed;
 
         if (countdownLive) {
             direction.x = 0;
@@ -199,6 +203,7 @@ public class PlayerManager : MonoBehaviour {
     // Throw ball
     void Throw() {
         if (balls.Count > 0) {
+            audioSourceThrow.Play();
             var ball = balls[0];
             balls.RemoveAt(0);
             ball.gameObject.transform.parent = null;

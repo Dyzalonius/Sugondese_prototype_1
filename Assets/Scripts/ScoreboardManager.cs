@@ -11,11 +11,13 @@ public class ScoreboardManager : MonoBehaviour {
     public Text hits1Text, hits2Text, score1Text, score2Text, time1Text, time2Text, countdownText1, countdownText2;
     public GameObject readyGroup1, readyGroup2, readyBlock1, readyBlock2, tutorial1, tutorial2, arena;
     public CanvasGroup spotlight;
+    public AudioSource audioSourceBuzzer, audioSourceWhistle;
 
     [HideInInspector] public int score1, score2, hits1, hits2;
     int countdownTimer;
     float courtTimer1, courtTimer2, ready1, ready2;
     GameManager gameManager;
+    bool hog1, hog2;
 
     // Use this for initialization
     void Start() {
@@ -25,6 +27,8 @@ public class ScoreboardManager : MonoBehaviour {
         hits2 = 0;
         courtTimer1 = maxCourtTimer;
         courtTimer2 = maxCourtTimer;
+        hog1 = false;
+        hog2 = false;
         UpdateText();
         countdownTimer = countdownTimerMax + 1;
 
@@ -67,6 +71,11 @@ public class ScoreboardManager : MonoBehaviour {
             case 1:
                 // count up courttimer2 if there is no balls in court 2
                 if (courtTimer1 > 0) {
+                    if (!hog1) {
+                        audioSourceWhistle.Play();
+                        hog1 = true;
+                    }
+
                     courtTimer1 -= Time.deltaTime;
 
                     // if timer is over max, set to max
@@ -96,6 +105,11 @@ public class ScoreboardManager : MonoBehaviour {
             case 2:
                 // count up courttimer1 if there is no balls in court 1
                 if (courtTimer2 > 0) {
+                    if (!hog2) {
+                        audioSourceWhistle.Play();
+                        hog2 = true;
+                    }
+
                     courtTimer2 -= Time.deltaTime;
 
                     // if timer is over max, set to max
@@ -126,11 +140,13 @@ public class ScoreboardManager : MonoBehaviour {
         switch (teamID) {
             case 1:
                 if (courtTimer1 > 0) {
+                    hog1 = false;
                     time1Text.color = Color.gray;
                 }
                 break;
             case 2:
                 if (courtTimer2 > 0) {
+                    hog2 = false;
                     time2Text.color = Color.gray;
                 }
                 break;
@@ -235,6 +251,8 @@ public class ScoreboardManager : MonoBehaviour {
     }
 
     void AddScore(int teamID) {
+        audioSourceBuzzer.Play();
+
         switch (teamID) {
             case 1:
                 score1++;

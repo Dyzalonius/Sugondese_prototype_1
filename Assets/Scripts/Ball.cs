@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour {
     public float minX, maxX, minY, maxY, maxSpeed, speedDropRate, speedDivisionOnBounce, speedCutOff;
     float speed;
     Vector3 originalPosition;
+    public AudioSource audioSourceBounce;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -77,6 +78,7 @@ public class Ball : MonoBehaviour {
     }
 
     protected virtual void OnBounce() {
+        audioSourceBounce.Play();
         Kill();
     }
 
