@@ -171,8 +171,8 @@ public class ScoreboardManager : MonoBehaviour {
                 break;
         }
 
-        //if (ready1 >= 1f && ready2 >= 1f) { //Multiplayer
-        if (ready1 >= 1f) { //Singleplayer
+        if (ready1 >= 1f && ready2 >= 1f) { //Multiplayer
+        //if (ready1 >= 1f) { //Singleplayer
             gameManager.EndWarmup();
         }
     }
