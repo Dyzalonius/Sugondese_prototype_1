@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public float[] team0Boundaries, team1Boundaries, team2Boundaries;
     public CanvasGroup scoreBoard, spotLight, lights, titleScreen;
     public GameObject player1, player2;
-    public GameObject ball, ballBounce, ballCurve, ballWater;
+    public GameObject ball, ballBounce, ballCurve, ballWater, ballElectricity;
 
     List<GameObject> balls;
     GameObject[] ballTypes;
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         balls = new List<GameObject>();
-        ballTypes = new GameObject[] { ball, ballBounce, ballCurve, ballWater };
+        ballTypes = new GameObject[] { ball, ballBounce, ballCurve, ballWater, ballElectricity };
         ballsToSpawn = new List<int>[] { new List<int> { }, new List<int> { }, new List<int> { } };
         ballSpawns = new float[][] { new float[] { 0, -1.78f, 1.78f }, new float[] { -1.5f, 0, -3f, 1.5f, -4.5f } };
         nextBallSpawn = 0;
