@@ -9,10 +9,11 @@ public class BallWater : BallBounce {
     float currentTimeBetweenWaterParticles;
     public GameObject waterParticle;
     public List<GameObject> waterParticles;
-    bool isActive;
+    bool isActive, isElectrocuted;
 
     protected override void Start() {
         isActive = false;
+        isElectrocuted = false;
         base.Start();
     }
 
@@ -31,7 +32,7 @@ public class BallWater : BallBounce {
     protected override void OnBounce() {
         if (!dying) {
             isActive = true;
-            Explode();
+            isElectrocuted = false;
         }
 
         base.OnBounce();
@@ -43,7 +44,18 @@ public class BallWater : BallBounce {
     }
 
     void Explode() {
-        waterParticles.Add(Instantiate(waterParticle, transform.position, Quaternion.Euler(0, 0, 0)));
+        GameObject particle = Instantiate(waterParticle, transform.position, Quaternion.Euler(0, 0, 0));
+        particle.GetComponent<WaterEffect>().Initialize(this, isElectrocuted);
+        waterParticles.Add(particle);
+    }
+
+    public void Electrocute() {
+        isElectrocuted = true;
+        for (int i = waterParticles.Count - 1; i >= 0; i--) {
+            if (waterParticles[i] != null) {
+                waterParticles[i].GetComponent<WaterEffect>().Electrocute();
+            }
+        }
     }
 
     public void OnDestroy() {

@@ -127,7 +127,17 @@ public class PlayerManager : MonoBehaviour {
                 break;
 
             case "water":
-                speed = maxSpeed * other.gameObject.GetComponent<WaterEffect>().speedReductionFactor;
+                WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
+                if (waterEffect.isElectrocuted) {
+                    Stun();
+                }
+                else {
+                    speed = maxSpeed * waterEffect.speedReductionFactor;
+                }
+                break;
+
+            case "electricity":
+                Stun();
                 break;
         }
     }
@@ -137,7 +147,15 @@ public class PlayerManager : MonoBehaviour {
             case "water":
                 speed = maxSpeed;
                 break;
+
+            case "electricity":
+                speed = maxSpeed;
+                break;
         }
+    }
+
+    void Stun() {
+        speed = 0f;
     }
 
     void PlayerHit() {

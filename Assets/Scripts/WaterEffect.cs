@@ -5,16 +5,21 @@ using UnityEngine;
 public class WaterEffect : MonoBehaviour {
 
     public float timeToMaxScale, timeBeforeRemove, timeToRemove, speedReductionFactor, startScaleFactor;
+    public Sprite electrocutedWaterSprite;
     float currentScaleFactor, currentTimeBeforeRemove, currentAlpha;
     Vector3 endScale;
+    BallWater parent;
     const float MAX_SCALE_FACTOR = 1f;
     const float MAX_ALPHA_FACTOR = 1f;
+
+    [HideInInspector] public bool isElectrocuted;
 
 	// Use this for initialization
 	void Start () {
         currentScaleFactor = startScaleFactor;
         currentAlpha = MAX_ALPHA_FACTOR;
         endScale = transform.localScale;
+        isElectrocuted = false;
         UpdateScale();
     }
 	
@@ -25,8 +30,14 @@ public class WaterEffect : MonoBehaviour {
         } else {
             FadeOut();
         }
+    }
 
-	}
+    public void Initialize(BallWater parent, bool isElectrocuted) {
+        this.parent = parent;
+        if (isElectrocuted) {
+            Electrocute();
+        }
+    }
 
     // Making the water particle bigger per frame
     void IncreaseScale() {
@@ -57,5 +68,14 @@ public class WaterEffect : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void Spark() {
+        parent.Electrocute();
+    }
+
+    public void Electrocute() {
+        isElectrocuted = true;
+        gameObject.GetComponent<SpriteRenderer>().sprite = electrocutedWaterSprite;
     }
 }

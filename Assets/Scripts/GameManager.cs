@@ -44,15 +44,17 @@ public class GameManager : MonoBehaviour {
         playerManager2 = player2.GetComponent<PlayerManager>();
 
         GenerateBallsToSpawn(0, 0);
-        FillLightManagerObjects();
         playerManager1.SetBoundaries(team1Boundaries);
         playerManager2.SetBoundaries(team2Boundaries);
+    }
 
+    private void Start() {
+        FillLightManagerObjects();
         StartTitleScreen();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate () {
         if (gameLive) {
             CheckHogg();
         }
