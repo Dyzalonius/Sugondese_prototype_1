@@ -18,8 +18,8 @@ public class StatusManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 statusPos = Camera.main.WorldToScreenPoint(transform.position);
-        statusBox.transform.position = statusPos;
+        /*Vector3 statusPos = Camera.main.WorldToScreenPoint(transform.position);
+        statusBox.transform.position = statusPos;*/
 	}
 
     private void FixedUpdate() {
@@ -46,7 +46,7 @@ public class StatusManager : MonoBehaviour {
     void Reset() {
         stunned = false;
         currentStunTime = stunDuration;
-        statusBox.alpha = 0f;
-        stunBar.GetComponent<RectTransform>().sizeDelta = new Vector2(currentStunTime * 90f, 5f);
+        //statusBox.alpha = 0f;
+        //stunBar.GetComponent<RectTransform>().sizeDelta = new Vector2(currentStunTime * 90f, 5f);
     }
 }

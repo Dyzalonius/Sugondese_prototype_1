@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public SpotlightManager spotLightManager;
     [HideInInspector] public LightManager lightManager;
     [HideInInspector] public TitleScreenManager titleScreenManager;
-    [HideInInspector] public PlayerManager playerManager1, playerManager2;
 
     // Use this for initialization
     void Awake () {
@@ -41,17 +40,17 @@ public class GameManager : MonoBehaviour {
         scoreboardManager = scoreBoard.GetComponent<ScoreboardManager>();
         spotLightManager = spotLight.GetComponent<SpotlightManager>();
         titleScreenManager = titleScreen.GetComponent<TitleScreenManager>();
-        playerManager1 = player1.GetComponent<PlayerManager>();
-        playerManager2 = player2.GetComponent<PlayerManager>();
+        //playerManager1 = player1.GetComponent<PlayerManager>();
+        //playerManager2 = player2.GetComponent<PlayerManager>();
 
         GenerateBallsToSpawn(0, 0);
-        playerManager1.SetBoundaries(team1Boundaries);
-        playerManager2.SetBoundaries(team2Boundaries);
+        //playerManager1.SetBoundaries(team1Boundaries);
+        //playerManager2.SetBoundaries(team2Boundaries);
     }
 
     private void Start() {
         FillLightManagerObjects();
-        StartTitleScreen();
+        StartWarmup();
     }
 
     // Update is called once per frame
@@ -111,21 +110,21 @@ public class GameManager : MonoBehaviour {
         nextBallSpawn = 0;
         DeleteBalls();
         SpawnBalls();
-        playerManager1.ResetRound();
-        playerManager2.ResetRound();
+        //playerManager1.ResetRound();
+        //playerManager2.ResetRound();
         scoreboardManager.ResetRound();
     }
 
     // End countdown, start round
     public void StartRound() {
-        playerManager1.countdownLive = false;
-        playerManager2.countdownLive = false;
+        //playerManager1.countdownLive = false;
+        //playerManager2.countdownLive = false;
     }
 
     // End round, start delay
     public void EndRound() {
-        playerManager1.roundLive = false;
-        playerManager2.roundLive = false;
+        //playerManager1.roundLive = false;
+        //playerManager2.roundLive = false;
         Invoke("DelayReset", resetDelay);
     }
 
@@ -139,8 +138,8 @@ public class GameManager : MonoBehaviour {
     void FillLightManagerObjects() {
         lightManager.objectsToFade.Add(player1);
         lightManager.objectsToFade.Add(player2);
-        lightManager.objectsToFade.Add(playerManager1.crosshair);
-        lightManager.objectsToFade.Add(playerManager2.crosshair);
+        //lightManager.objectsToFade.Add(playerManager1.crosshair);
+        //lightManager.objectsToFade.Add(playerManager2.crosshair);
         lightManager.objectsToFade.Add(scoreboardManager.tutorial1.transform.GetChild(0).gameObject);
         lightManager.objectsToFade.Add(scoreboardManager.tutorial2.transform.GetChild(0).gameObject);
         lightManager.canvasGroupsToFade.Add(scoreboardManager.tutorial1.GetComponent<CanvasGroup>());

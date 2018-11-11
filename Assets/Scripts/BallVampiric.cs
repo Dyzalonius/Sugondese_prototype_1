@@ -25,7 +25,7 @@ public class BallVampiric : Ball {
     }
 
     void LifeSteal() {
-        ScoreboardManager scoreboardManager = playerManager.gameManager.scoreboardManager;
+        /*ScoreboardManager scoreboardManager = playerManager.gameManager.scoreboardManager;
 
         if (playerManager.teamID == 1) {
             if (scoreboardManager.hits2 > 0) {
@@ -36,6 +36,6 @@ public class BallVampiric : Ball {
             if (scoreboardManager.hits1 > 0) {
                 scoreboardManager.RemoveHit(1);
             }
-        }
+        }*/
     }
 }

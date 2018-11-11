@@ -46,7 +46,7 @@ public class VampireManager : MonoBehaviour {
     }
 
     public void Initialize(PlayerManager playerManager) {
-        player1 = playerManager.gameManager.player1;
+        /*player1 = playerManager.gameManager.player1;
         player2 = playerManager.gameManager.player2;
         panel1 = playerManager.gameManager.scoreboardManager.hits1Text;
         panel2 = playerManager.gameManager.scoreboardManager.hits2Text;
@@ -60,6 +60,6 @@ public class VampireManager : MonoBehaviour {
                 transform.position = player2.transform.position;
                 targetPos = panel2.transform.position;
                 break;
-        }
+        }*/
     }
 }
