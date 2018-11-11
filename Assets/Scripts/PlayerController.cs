@@ -17,8 +17,8 @@ public class PlayerController : NetworkBehaviour {
     GameObject crosshair;
 
     Vector3[] ballPositions = new Vector3[] { new Vector3(0, 0, 0), new Vector3(-0.1f, -0.1f, 0), new Vector3(0.1f, -0.1f, 0) }; //should make serializeable
-
-    // Use this for initialization
+    
+    // Start
     void Start () {
         throwing = false;
         allowThrow = true;
@@ -32,13 +32,14 @@ public class PlayerController : NetworkBehaviour {
         }
     }
 
+    // StartLocalPlayer
     public override void OnStartLocalPlayer() {
         character.GetComponent<SpriteRenderer>().color = Color.blue;
         crosshair = Instantiate(crosshairPrefab);
         crosshair.transform.parent = transform;
     }
 
-    // Update is called once per frame
+    // Update
     void Update () {
         if (!isLocalPlayer) return;
 
@@ -124,5 +125,59 @@ public class PlayerController : NetworkBehaviour {
         for (int i = 0; i < balls.Count; i++) {
             balls[i].gameObject.transform.localPosition = ballPositions[i];
         }
+    }
+
+    // Collision Enter
+    void OnTriggerEnter2D(Collider2D other) {
+        switch (other.gameObject.tag) {
+            case "ball":
+                Debug.Log("collide!");
+                Ball ball = other.gameObject.GetComponent<Ball>();
+
+                // Pickup ball
+                if (ball.onGround && balls.Count < 3) {
+                    Pickup(ball);
+                }
+
+                // Get hit
+                if (ball.flying) {
+                    ball.OnBounce(this);
+
+                    /*if (roundLive) {
+                        //gameManager.spotLightManager.SetTarget(gameObject);
+                        PlayerHit();
+                    }*/
+                }
+                break;
+
+            /*case "water":
+                WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
+                if (waterEffect.isElectrocuted) {
+                    if (!stunned) {
+                        Stun();
+                    }
+                }
+                else {
+                    speed = maxSpeed * waterEffect.speedReductionFactor;
+                }
+                break;
+
+            case "electricity":
+                if (!stunned) {
+                    Stun();
+                }
+                break;*/
+        }
+    }
+
+    // Collision Exit
+    void OnTriggerExit2D(Collider2D other) {
+        /*switch (other.gameObject.tag) {
+            case "water":
+                if (!stunned) {
+                    speed = maxSpeed;
+                }
+                break;
+        }*/
     }
 }

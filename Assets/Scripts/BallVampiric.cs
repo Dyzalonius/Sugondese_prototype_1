@@ -5,22 +5,22 @@ using UnityEngine;
 public class BallVampiric : Ball {
 
     [SerializeField] GameObject vampirePrefab;
-    PlayerManager playerManager;
+    PlayerController playerController;
 
     protected override void Start() {
         base.Start();
     }
 
-    public override void OnBounce(PlayerManager playerManager) {
-        this.playerManager = playerManager;
+    public override void OnBounce(PlayerController playerController) {
+        this.playerController = playerController;
         SpawnVampire();
 
-        base.OnBounce(playerManager);
+        base.OnBounce(playerController);
     }
 
     void SpawnVampire() {
-        GameObject vampire = Instantiate(vampirePrefab, playerManager.transform.position, Quaternion.Euler(0, 0, 0));
-        vampire.GetComponent<VampireManager>().Initialize(playerManager);
+        GameObject vampire = Instantiate(vampirePrefab, playerController.transform.position, Quaternion.Euler(0, 0, 0));
+        vampire.GetComponent<VampireManager>().Initialize(playerController);
         Invoke("LifeSteal", 0.4f);
     }
 

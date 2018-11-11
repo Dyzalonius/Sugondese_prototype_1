@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212711464022983626}
   - component: {fileID: 50097757081731828}
   - component: {fileID: 58440234419234904}
-  - component: {fileID: 114002310143066294}
   - component: {fileID: 82356202049487654}
+  - component: {fileID: 114002310143066294}
   m_Layer: 9
   m_Name: BallBounce
   m_TagString: ball

@@ -35,57 +35,6 @@ public class PlayerManager : MonoBehaviour {
         maxY = newBoundaries[3];
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
-        switch (other.gameObject.tag) {
-            case "ball":
-                Ball ball = other.gameObject.GetComponent<Ball>();
-
-                // Pickup ball
-                if (ball.onGround && balls.Count < 3) {
-                    Pickup(ball);
-                }
-
-                // Get hit
-                if (ball.flying) {
-                    ball.OnBounce(this);
-
-                    if (roundLive) {
-                        //gameManager.spotLightManager.SetTarget(gameObject);
-                        PlayerHit();
-                    }
-                }
-                break;
-
-            case "water":
-                WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
-                if (waterEffect.isElectrocuted) {
-                    if (!stunned) {
-                        Stun();
-                    }
-                }
-                else {
-                    speed = maxSpeed * waterEffect.speedReductionFactor;
-                }
-                break;
-
-            case "electricity":
-                if (!stunned) {
-                    Stun();
-                }
-                break;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-        switch (other.gameObject.tag) {
-            case "water":
-                if (!stunned) {
-                    speed = maxSpeed;
-                }
-                break;
-        }
-    }
-
     void Stun() {
         speed = 0f;
         statusManager.Stun();

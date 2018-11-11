@@ -45,7 +45,7 @@ public class VampireManager : MonoBehaviour {
         GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 0.1f);
     }
 
-    public void Initialize(PlayerManager playerManager) {
+    public void Initialize(PlayerController playerController) {
         /*player1 = playerManager.gameManager.player1;
         player2 = playerManager.gameManager.player2;
         panel1 = playerManager.gameManager.scoreboardManager.hits1Text;

@@ -22,8 +22,10 @@ GameObject:
   - component: {fileID: 212711464022983626}
   - component: {fileID: 50097757081731828}
   - component: {fileID: 58440234419234904}
-  - component: {fileID: 114271830189824758}
   - component: {fileID: 82471645470032304}
+  - component: {fileID: 114909700666846364}
+  - component: {fileID: 114510828334422808}
+  - component: {fileID: 114271830189824758}
   m_Layer: 9
   m_Name: Ball
   m_TagString: ball
@@ -73,7 +75,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -197,6 +199,59 @@ MonoBehaviour:
   speedDivisionOnBounce: 3
   speedCutOff: 0.2
   audioSourceBounce: {fileID: 82471645470032304}
+--- !u!114 &114510828334422808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1390377918576082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 1
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114909700666846364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1390377918576082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 178
+    i1: 60
+    i2: 10
+    i3: 165
+    i4: 97
+    i5: 233
+    i6: 134
+    i7: 4
+    i8: 169
+    i9: 38
+    i10: 181
+    i11: 208
+    i12: 86
+    i13: 115
+    i14: 180
+    i15: 46
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!212 &212711464022983626
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -233,7 +288,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bae5bd47dec58f74f9cecfe871e4cd10, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

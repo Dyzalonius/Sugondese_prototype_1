@@ -4,11 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - player1
-  - player2
   - ball
   - water
   - electricity
+  - player
   layers:
   - Default
   - TransparentFX

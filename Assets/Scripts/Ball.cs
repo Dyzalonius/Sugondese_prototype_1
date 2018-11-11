@@ -82,8 +82,8 @@ public class Ball : MonoBehaviour {
         Kill();
     }
 
-    public virtual void OnBounce(PlayerManager playerManager) {
-        Collide(playerManager.transform.position);
+    public virtual void OnBounce(PlayerController playerController) {
+        Collide(playerController.transform.position);
         OnBounce();
     }
 
@@ -103,5 +103,9 @@ public class Ball : MonoBehaviour {
         onGround = true;
         flying = false;
         transform.position = originalPosition;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log("collision");
     }
 }
