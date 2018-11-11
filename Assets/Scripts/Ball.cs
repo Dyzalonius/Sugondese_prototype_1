@@ -105,7 +105,28 @@ public class Ball : MonoBehaviour {
         transform.position = originalPosition;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("collision");
+    private void OnTriggerEnter2D(Collider2D collider) {
+        GameObject other = collider.gameObject;
+
+        switch (other.tag) {
+            case "Player":
+                PlayerController playerController = other.transform.parent.GetComponent<PlayerController>();
+
+                // Pickup ball
+                if (onGround && playerController.GetBallCount() < 3) {
+                    playerController.Pickup(this);
+                }
+
+                // Get hit
+                if (flying) {
+                    OnBounce(playerController);
+
+                    /*if (roundLive) {
+                        //gameManager.spotLightManager.SetTarget(gameObject);
+                        PlayerHit();
+                    }*/
+                }
+                break;
+        }
     }
 }

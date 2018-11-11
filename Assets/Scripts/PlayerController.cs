@@ -113,7 +113,7 @@ public class PlayerController : NetworkBehaviour {
     }
 
     // Pickup ball
-    void Pickup(Ball ball) {
+    public void Pickup(Ball ball) {
         ball.transform.parent = transform;
         balls.Add(ball);
         ball.GetComponent<Ball>().Pickup();
@@ -127,30 +127,16 @@ public class PlayerController : NetworkBehaviour {
         }
     }
 
-    // Collision Enter
-    void OnTriggerEnter2D(Collider2D other) {
+    // Get ballcount
+    public int GetBallCount() {
+        return balls.Count;
+    }
+    
+    /*void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("playerCollisionTrigger");
         switch (other.gameObject.tag) {
-            case "ball":
-                Debug.Log("collide!");
-                Ball ball = other.gameObject.GetComponent<Ball>();
 
-                // Pickup ball
-                if (ball.onGround && balls.Count < 3) {
-                    Pickup(ball);
-                }
-
-                // Get hit
-                if (ball.flying) {
-                    ball.OnBounce(this);
-
-                    /*if (roundLive) {
-                        //gameManager.spotLightManager.SetTarget(gameObject);
-                        PlayerHit();
-                    }*/
-                }
-                break;
-
-            /*case "water":
+            case "water":
                 WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
                 if (waterEffect.isElectrocuted) {
                     if (!stunned) {
@@ -166,18 +152,17 @@ public class PlayerController : NetworkBehaviour {
                 if (!stunned) {
                     Stun();
                 }
-                break;*/
+                break;
         }
     }
 
-    // Collision Exit
     void OnTriggerExit2D(Collider2D other) {
-        /*switch (other.gameObject.tag) {
+        switch (other.gameObject.tag) {
             case "water":
                 if (!stunned) {
                     speed = maxSpeed;
                 }
                 break;
-        }*/
-    }
+        }
+    }*/
 }

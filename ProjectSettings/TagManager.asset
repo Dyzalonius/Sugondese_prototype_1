@@ -7,7 +7,6 @@ TagManager:
   - ball
   - water
   - electricity
-  - player
   layers:
   - Default
   - TransparentFX

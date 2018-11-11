@@ -13,9 +13,4 @@ public class BallSpawner : NetworkBehaviour {
         var ball = Instantiate(ballPrefab, ballSpawnPosition, Quaternion.Euler(0, 0, 0));
         NetworkServer.Spawn(ball);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
