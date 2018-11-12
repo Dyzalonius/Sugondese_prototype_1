@@ -91,7 +91,7 @@ public class PlayerController : NetworkBehaviour {
     void HandleFire() {
         if (Input.GetAxis("Fire" + inputType) > 0) {
             if (!throwing && allowThrow) {
-                Throw();
+                TryThrow();
             }
             throwing = true;
         }
@@ -100,39 +100,52 @@ public class PlayerController : NetworkBehaviour {
         }
     }
 
-    // Throw ball
-    void Throw() {
+    // Throw ball local
+    void TryThrow() {
         if (balls.Count > 0) {
             var ball = balls[0];
             balls.RemoveAt(0);
             SortBalls();
-            CmdThrow(ball.gameObject);
+
+            CmdThrow(ball.gameObject, transform.position, aimDirection);
         }
     }
 
-    // Throw ball
+    // Throw ball server
     [Command]
-    void CmdThrow(GameObject ballObject) {
+    void CmdThrow(GameObject ballObject, Vector3 position, Vector3 aimDirection) {
         //audioSourceThrow.Play();
-        ballObject.transform.parent = null;
-        Ball ball = ballObject.GetComponent<Ball>();
-        ball.Fire(aimDirection);
-
-        // rpc
-        RpcSetParent(ballObject);
+        RpcThrow(ballObject, position, aimDirection);
     }
 
+    // Throw ball clients
     [ClientRpc]
-    void RpcSetParent(GameObject ballObject) {
+    void RpcThrow(GameObject ballObject, Vector3 position, Vector3 aimDirection) {
         ballObject.transform.parent = null;
+        ballObject.transform.position = position;
+        ballObject.GetComponent<Ball>().Fire(aimDirection);
     }
 
     // Pickup ball
-    public void Pickup(Ball ball) {
-        ball.transform.parent = transform;
-        balls.Add(ball);
-        ball.GetComponent<Ball>().Pickup();
-        SortBalls();
+    public void TryPickup(Ball ball) {
+        if (balls.Count < 3) {
+            balls.Add(ball);
+            SortBalls();
+
+            CmdPickup(ball.gameObject, gameObject);
+        }
+    }
+
+    [Command]
+    void CmdPickup(GameObject ballObject, GameObject parentObject) {
+        RpcPickup(ballObject, parentObject);
+    }
+
+    [ClientRpc]
+    void RpcPickup(GameObject ballObject, GameObject parentObject) {
+        ballObject.GetComponent<Ball>().Pickup();
+        ballObject.transform.parent = parentObject.transform;
+        ballObject.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     // Sort balls
@@ -140,10 +153,5 @@ public class PlayerController : NetworkBehaviour {
         for (int i = 0; i < balls.Count; i++) {
             balls[i].gameObject.transform.localPosition = ballPositions[i];
         }
-    }
-
-    // Get ballcount
-    public int GetBallCount() {
-        return balls.Count;
     }
 }

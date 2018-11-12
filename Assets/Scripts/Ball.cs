@@ -64,7 +64,6 @@ public class Ball : MonoBehaviour {
     public void Pickup() {
         onGround = false;
         dying = false;
-        transform.localPosition = new Vector3(0, 0, 0);
     }
 
     protected void ChangeDirection(Vector3 newDirection) {
@@ -113,8 +112,8 @@ public class Ball : MonoBehaviour {
                 PlayerController playerController = other.transform.parent.GetComponent<PlayerController>();
 
                 // Pickup ball
-                if (onGround && playerController.GetBallCount() < 3) {
-                    playerController.Pickup(this);
+                if (onGround) {
+                    playerController.TryPickup(this);
                 }
 
                 // Get hit
