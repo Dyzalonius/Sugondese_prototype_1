@@ -60,4 +60,38 @@ public class PlayerManager : MonoBehaviour {
         player.transform.position = spawnPosition;
     }
     */
+
+    /*void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("playerCollisionTrigger");
+        switch (other.gameObject.tag) {
+
+            case "water":
+                WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
+                if (waterEffect.isElectrocuted) {
+                    if (!stunned) {
+                        Stun();
+                    }
+                }
+                else {
+                    speed = maxSpeed * waterEffect.speedReductionFactor;
+                }
+                break;
+
+            case "electricity":
+                if (!stunned) {
+                    Stun();
+                }
+                break;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        switch (other.gameObject.tag) {
+            case "water":
+                if (!stunned) {
+                    speed = maxSpeed;
+                }
+                break;
+        }
+    }*/
 }

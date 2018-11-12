@@ -17,9 +17,9 @@ public class PlayerController : NetworkBehaviour {
     GameObject crosshair;
 
     Vector3[] ballPositions = new Vector3[] { new Vector3(0, 0, 0), new Vector3(-0.1f, -0.1f, 0), new Vector3(0.1f, -0.1f, 0) }; //should make serializeable
-    
+
     // Start
-    void Start () {
+    void Start() {
         throwing = false;
         allowThrow = true;
         speed = maxSpeed;
@@ -40,7 +40,7 @@ public class PlayerController : NetworkBehaviour {
     }
 
     // Update
-    void Update () {
+    void Update() {
         if (!isLocalPlayer) return;
 
         Move();
@@ -102,14 +102,29 @@ public class PlayerController : NetworkBehaviour {
 
     // Throw ball
     void Throw() {
-        /*if (balls.Count > 0) {
-            audioSourceThrow.Play();
+        if (balls.Count > 0) {
             var ball = balls[0];
             balls.RemoveAt(0);
-            ball.gameObject.transform.parent = null;
-            ball.Fire(aimDirection);
             SortBalls();
-        }*/
+            CmdThrow(ball.gameObject);
+        }
+    }
+
+    // Throw ball
+    [Command]
+    void CmdThrow(GameObject ballObject) {
+        //audioSourceThrow.Play();
+        ballObject.transform.parent = null;
+        Ball ball = ballObject.GetComponent<Ball>();
+        ball.Fire(aimDirection);
+
+        // rpc
+        RpcSetParent(ballObject);
+    }
+
+    [ClientRpc]
+    void RpcSetParent(GameObject ballObject) {
+        ballObject.transform.parent = null;
     }
 
     // Pickup ball
@@ -131,38 +146,4 @@ public class PlayerController : NetworkBehaviour {
     public int GetBallCount() {
         return balls.Count;
     }
-    
-    /*void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("playerCollisionTrigger");
-        switch (other.gameObject.tag) {
-
-            case "water":
-                WaterEffect waterEffect = other.gameObject.GetComponent<WaterEffect>();
-                if (waterEffect.isElectrocuted) {
-                    if (!stunned) {
-                        Stun();
-                    }
-                }
-                else {
-                    speed = maxSpeed * waterEffect.speedReductionFactor;
-                }
-                break;
-
-            case "electricity":
-                if (!stunned) {
-                    Stun();
-                }
-                break;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-        switch (other.gameObject.tag) {
-            case "water":
-                if (!stunned) {
-                    speed = maxSpeed;
-                }
-                break;
-        }
-    }*/
 }
